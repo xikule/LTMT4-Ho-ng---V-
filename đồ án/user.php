@@ -18,7 +18,7 @@ include('connect.php');
         public function register($tenNX,$soDT)
             {
                 global $conn;
-                $sql="insert into nhaxe(tenNX,soDT)
+                $sql="insert into nha_xe(tenNX,soDT)
                         values('$tenNX','$soDT')";
                 echo $sql;
                 $run=mysqli_query($conn,$sql);
@@ -27,7 +27,7 @@ include('connect.php');
         public function select_NX()
             {
                 global $conn;
-                $sql="select * from nhaxe";// Lấy hết các bản ghi trong table thuộc database
+                $sql="select * from nha_xe";// Lấy hết các bản ghi trong table thuộc database
                 $run= mysqli_query($conn,$sql);
                 return $run;
             }
@@ -35,7 +35,7 @@ include('connect.php');
         public function delete_NX($id_NX)
             {
             global $conn;
-            $sql="delete from nhaxe where id_NX='$id_NX'";
+            $sql="delete from nha_xe where id_NX='$id_NX'";
             $run=mysqli_query($conn, $sql);
             return $run;
             }
@@ -43,14 +43,14 @@ include('connect.php');
         public function select_id_NX($id_NX)
             {
               global $conn;
-              $sql="select * from nhaxe where id_NX='$id_NX'";
+              $sql="select * from nha_xe where id_NX='$id_NX'";
               $run=mysqli_query($conn, $sql);
               return $run;
             }
         public function update_NX($tenNX,$soDT,$id_NX)
             {
                 global $conn;
-                $sql= "update nhaxe set tenNX='$tenNX',
+                $sql= "update nha_xe set tenNX='$tenNX',
                                         soDT='$soDT' where id_NX='$id_NX'";
                 $run= mysqli_query($conn, $sql);
                 return $run;
