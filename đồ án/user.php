@@ -56,6 +56,17 @@ include('connect.php');
                 return $run;
             }
         }
+        class data_user{
+            public function register($fullname, $email, $pass)
+            {
+                global $conn;
+                $sql="insert into testing(user,email,pass)
+                        values('$fullname','$email','$pass')";
+                echo $sql;
+                $run=mysqli_query($conn,$sql);
+                return $run;
+            }
+        }
 
         // Khuyến mại
             class data_voucher

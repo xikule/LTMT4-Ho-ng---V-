@@ -96,21 +96,30 @@ if(isset($_POST['login'])&&($_POST['login'])){
       </form>
 
       <!-- Nội dung Đăng ký -->
-      <form id="registerForm" class="hidden">
+      <form id="registerForm" class="hidden" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="mb-4">
           <label class="block mb-1 font-medium">Họ và tên</label>
-          <input type="text" class="w-full p-2 border border-gray-300 rounded-xl" placeholder="" required />
+          <input type="text" class="w-full p-2 border border-gray-300 rounded-xl" name="fullname" placeholder="" required />
         </div>
         <div class="mb-4">
           <label class="block mb-1 font-medium">Email</label>
-          <input type="email" class="w-full p-2 border border-gray-300 rounded-xl" placeholder="hovaten@gmail.com" required />
+          <input type="email" class="w-full p-2 border border-gray-300 rounded-xl" name="email" placeholder="hovaten@gmail.com" required />
         </div>
         <div class="mb-4">
           <label class="block mb-1 font-medium">Mật khẩu</label>
-          <input type="password" class="w-full p-2 border border-gray-300 rounded-xl" placeholder="********" required />
+          <input type="password" class="w-full p-2 border border-gray-300 rounded-xl" name="pass" placeholder="********" required />
         </div>
-        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700">Đăng ký</button>
+        <input type="submit" class="w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700" name="register" value="Đăng ký" />
       </form>
+      <?php
+        if (isset($_POST['register'])) {
+          $fullname = $_POST['fullname'];
+          $email = $_POST['email'];
+          $pass = $_POST['pass'];
+          $get_data = new data_user();
+          $insert = $get_data->register($fullname, $email, $pass);
+        }
+      ?>
     </div>
   </div>
 
