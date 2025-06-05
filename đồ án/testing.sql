@@ -81,3 +81,12 @@ CREATE TABLE voucher (
     code VARCHAR(100),
     discount_value VARCHAR(20)
 );
+CREATE TABLE chuyendi (
+    id_cd INT AUTO_INCREMENT PRIMARY KEY,      		-- Khóa chính
+    id_NX INT NOT NULL,                          	-- Khóa ngoại (liên kết nhà xe)
+    diemKH VARCHAR(100) NOT NULL,                	-- Điểm xuất phát
+    diemKT VARCHAR(100) NOT NULL,                	-- Điểm đến
+    lichTrinh TIME NOT NULL,                    	-- Giờ đi
+    gia INT NOT NULL,					-- Giá vé
+    FOREIGN KEY (id_NX) REFERENCES nhaxe(id_NX)     	-- Khóa ngoại đến bảng nhaxe
+    );
