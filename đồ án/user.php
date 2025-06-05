@@ -111,5 +111,59 @@ include('connect.php');
                 $run= mysqli_query($conn, $sql);
                 return $run;
             }
+            // Chuyến đi
+        class data_chuyendi
+        {
+        public function register($id_NX,$diemKH,$diemKT,$lichTrinh,$gia)
+            {
+                global $conn;
+                $sql="insert into chuyendi(id_NX,diemKH,diemKT,lichTrinh,gia)
+                        values('$id_NX','$diemKH','$diemKT','$lichTrinh','$gia')";
+                echo $sql;
+                $run=mysqli_query($conn,$sql);
+                return $run;
+            }
+        public function select_chuyendi()
+            {
+                global $conn;
+                $sql = "select chuyendi.id_cd, nhaxe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.gia 
+                        from chuyendi join nhaxe on chuyendi.id_NX = nhaxe.id_NX";
+                $run= mysqli_query($conn,$sql);
+                return $run;
+            }
+        public function select_cd()
+            {
+                global $conn;
+                $sql="select * from chuyendi";
+                $run= mysqli_query($conn,$sql);
+                return $run;
+            }
+        public function delete_chuyendi($id_cd)
+            {
+            global $conn;
+            $sql="delete from chuyendi where id_cd='$id_cd'";
+            $run=mysqli_query($conn, $sql);
+            return $run;
+            }
+
+        public function select_id_cd($id_cd)
+            {
+              global $conn;
+              $sql="select chuyendi.id_cd, nhaxe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.gia 
+                        from chuyendi join nhaxe on chuyendi.id_NX = nhaxe.id_NX where id_cd='$id_cd'";
+              $run=mysqli_query($conn, $sql);
+              return $run;
+            }
+        public function update_chuyendi($id_NX,$diemKH,$diemKT,$lichTrinh,$gia,$id_cd)
+            {
+                global $conn;
+                $sql= "update chuyendi set id_NX='$id_NX',
+                                        diemKH='$diemKH',
+                                        diemKT='$diemKT',
+                                        lichTrinh='$lichTrinh',
+                                        gia='$gia' where id_cd='$id_cd'";
+                $run= mysqli_query($conn, $sql);
+                return $run;
+            }
         }
 ?>
