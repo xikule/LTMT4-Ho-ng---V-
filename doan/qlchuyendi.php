@@ -25,7 +25,7 @@
 
       <?php
         require 'connect.php';
-        $sql = "SELECT id_NX, tenNX FROM nhaxe";
+        $sql = "SELECT id_NX, tenNX FROM nha_xe";
         $result = $conn->query($sql);
       ?>
       <!-- Quản lý chuyến đi -->
