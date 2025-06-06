@@ -15,7 +15,7 @@ if(isset($_POST['login'])&&($_POST['login'])){
     header("Location: trangchu.php"); 
     echo "<script>alert('Đăng nhập thành công!');</script>";
   }
-  else echo "<script>alert('Đăng nhập thất bại!');</script>";
+  else $text_error = "Tên đăng nhập hoặc mật khẩu không đúng!";
   ob_end_flush(); // Kết thúc bộ đệm đầu ra và gửi nội dung đến trình duyệt
 }
 ?>
@@ -93,6 +93,9 @@ if(isset($_POST['login'])&&($_POST['login'])){
           <input type="password" class="w-full p-2 border border-gray-300 rounded-xl" name="pass" placeholder="********" required />
         </div>
         <input type="submit" class="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700" name="login" value="Đăng nhập"/>
+        <?php if (isset($text_error)&&($text_error != "")) { ?>
+          <p class="text-red-500 mt-2"><?php echo $text_error; ?></p>
+        <?php } ?>
       </form>
 
       <!-- Nội dung Đăng ký -->
