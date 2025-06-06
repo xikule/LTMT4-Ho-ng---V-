@@ -111,6 +111,7 @@ include('connect.php');
                 $run= mysqli_query($conn, $sql);
                 return $run;
             }
+        }
             // Chuyến đi
         class data_chuyendi
         {
