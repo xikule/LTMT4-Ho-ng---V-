@@ -35,7 +35,7 @@
             ?>
             <?php
                 require 'connect.php';
-                $sql = "SELECT id_NX, tenNX FROM nhaxe";
+                $sql = "SELECT id_NX, tenNX FROM nha_xe";
                 $result = $conn->query($sql);
             ?>
         <form class="space-y-2 mb-4" method="POST" >

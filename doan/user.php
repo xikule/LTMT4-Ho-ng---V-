@@ -127,8 +127,8 @@ include('connect.php');
         public function select_chuyendi()
             {
                 global $conn;
-                $sql = "select chuyendi.id_cd, nhaxe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.gia 
-                        from chuyendi join nhaxe on chuyendi.id_NX = nhaxe.id_NX";
+                $sql = "select chuyendi.id_cd, nha_xe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.gia 
+                        from chuyendi join nha_xe on chuyendi.id_NX = nha_xe.id_NX";
                 $run= mysqli_query($conn,$sql);
                 return $run;
             }
