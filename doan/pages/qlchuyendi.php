@@ -1,3 +1,4 @@
+<?php include '../check_login.php'; ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -24,7 +25,7 @@
     <main class="flex-1 p-6 space-y-10">
 
       <?php
-        require 'connect.php';
+        require '../connect.php';
         $sql = "SELECT id_NX, tenNX FROM nha_xe";
         $result = $conn->query($sql);
       ?>
@@ -52,7 +53,7 @@
             <input type="submit" class="bg-blue-600 text-white px-4 py-2 rounded" name="themchuyendi" value="Thêm chuyến">
           
             <?php
-                  include('user.php');
+                  include('../user.php');
                   $get_data=new data_chuyendi();
                   $selectchuyendi=$get_data->select_chuyendi();
             ?>

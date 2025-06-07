@@ -1,23 +1,28 @@
+<!--tạm thời bỏ đi php "ghi chú"-->
 <?php
-session_start();
+
 ob_start(); // Bắt đầu bộ đệm đầu ra
   include "user.php";
   include "connectdtb.php";
+  include "check_login.php";
+/*
 if(isset($_POST['login'])&&($_POST['login'])){
   $user=$_POST['user'];
   $pass=$_POST['pass'];
   $role=checkuser($user, $pass);
   $_SESSION['role'] = $role;
-  if($role==1)header("Location: quantri.php");
-
+  if($role==1){
+    header("Location:pages/quantri.php");
+  }
   else if($role==0)
   {
     header("Location: trangchu.php"); 
     echo "<script>alert('Đăng nhập thành công!');</script>";
   }
   else $text_error = "Tên đăng nhập hoặc mật khẩu không đúng!";
+*/
   ob_end_flush(); // Kết thúc bộ đệm đầu ra và gửi nội dung đến trình duyệt
-}
+//}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -33,14 +38,14 @@ if(isset($_POST['login'])&&($_POST['login'])){
   <nav class="bg-white shadow-md py-4">
     <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
       <h1 class="text-xl font-bold text-blue-600">
-        <a href="trangchu.html">XeKhach365</a>
+        <a href="trangchu.php">XeKhach365</a>
       </h1>
       <div class="space-x-4 hidden md:flex items-center">
         <!--
-        <a href="trangchu.html" class="text-gray-600 hover:text-blue-600">Trang chủ</a>
+        <a href="trangchu.php" class="text-gray-600 hover:text-blue-600">Trang chủ</a>
         -->
         <a href="#" class="text-gray-600 hover:text-blue-600">Tuyến xe</a>
-        <a href="datve.html" class="text-gray-600 hover:text-blue-600">Đặt vé</a>
+        <a href="datve.php" class="text-gray-600 hover:text-blue-600">Đặt vé</a>
         <a href="#" class="text-gray-600 hover:text-blue-600">Liên hệ</a>
         <button onclick="openModal()" class="bg-blue-600 text-white px-4 py-1 rounded-xl hover:bg-blue-700 transition">Đăng nhập</button>
       </div>

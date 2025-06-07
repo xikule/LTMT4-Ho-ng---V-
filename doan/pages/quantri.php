@@ -1,13 +1,5 @@
-<?php
-  session_start();
-  ob_start(); // Bắt đầu bộ đệm đầu ra
-  // Chỉ cho phép truy cập nếu là admin (role == 1)
-  if(!isset($_SESSION['role']) || $_SESSION['role'] != 1) {
-    header("Location: login.php");
-    exit();
-  }
-  include "connectdtb.php";
-?>
+
+<?php include '../check_login.php'; ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>

@@ -1,3 +1,4 @@
+<?php include '../check_login.php'; ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -33,7 +34,7 @@
             <input type="submit" class="bg-blue-600 text-white px-4 py-2 rounded" name="themnhaxe" value="Thêm nhà xe">
 
             <?php
-                  include('user.php');//Chèn trang control vào bài
+                  include('../user.php');//Chèn trang control vào bài
                   $get_data=new data_nhaxe();//Gọi đến class data
                   $select=$get_data->select_NX();//Gọi function select trong trang control
             ?>
