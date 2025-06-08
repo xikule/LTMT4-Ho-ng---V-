@@ -47,7 +47,30 @@ if(isset($_POST['login'])&&($_POST['login'])){
         <a href="#" class="text-gray-600 hover:text-blue-600">Tuyến xe</a>
         <a href="datve.php" class="text-gray-600 hover:text-blue-600">Đặt vé</a>
         <a href="#" class="text-gray-600 hover:text-blue-600">Liên hệ</a>
-        <button onclick="openModal()" class="bg-blue-600 text-white px-4 py-1 rounded-xl hover:bg-blue-700 transition">Đăng nhập</button>
+        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 0): ?>
+  <!-- User avatar circle with dropdown -->
+  <div class="relative">
+    <button id="avatarBtn" onclick="toggleDropdown()" type="button" class="w-9 h-9 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold focus:outline-none">
+      <span>
+        <?php
+          if (isset($_SESSION['user'])) {
+            echo strtoupper(substr($_SESSION['user'], 0, 1));
+          } else {
+            echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.485 0 4.797.755 6.879 2.047M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>';
+          }
+        ?>
+      </span>
+    </button>
+    <!-- Dropdown menu -->
+    <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-32 bg-white rounded shadow-lg z-50">
+      <form method="post" action="">
+        <button type="submit" name="logout" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Đăng xuất</button>
+      </form>
+    </div>
+  </div>
+<?php else: ?>
+  <button onclick="openModal()" class="bg-blue-600 text-white px-4 py-1 rounded-xl hover:bg-blue-700 transition">Đăng nhập</button>
+<?php endif; ?>
       </div>
     </div>
   </nav>
@@ -140,6 +163,17 @@ if(isset($_POST['login'])&&($_POST['login'])){
 
   <!-- JavaScript: Open/Close Modal -->
   <script>
+  function toggleDropdown() {
+    const menu = document.getElementById('dropdownMenu');
+    menu.classList.toggle('hidden');
+  }
+  document.addEventListener('click', function(event) {
+    const avatarBtn = document.getElementById('avatarBtn');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    if (!avatarBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+      dropdownMenu.classList.add('hidden');
+    }
+  });
     function openModal() {
       document.getElementById('authModal').classList.remove('hidden');
       showTab('login');
