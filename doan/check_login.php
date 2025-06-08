@@ -12,7 +12,7 @@ if (isset($_POST['login']) && $_POST['login']) {
         echo "<script>alert('Đăng nhập thành công!');</script>";
         exit();
     } else if ($role == 0) {
-        header("Location:../trangchu.php");
+        header("Location:../doan/trangchu.php");
         echo "<script>alert('Đăng nhập thành công!');</script>";
         exit();
     } else {
@@ -33,5 +33,11 @@ if (
         header("Location:../trangchu.php");
         exit();
     }
+}
+
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header("Location:../doan/trangchu.php");
+    exit();
 }
 ?>
