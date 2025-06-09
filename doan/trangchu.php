@@ -45,7 +45,7 @@ if(isset($_POST['login'])&&($_POST['login'])){
         <a href="trangchu.php" class="text-gray-600 hover:text-blue-600">Trang chủ</a>
         -->
         <a href="#" class="text-gray-600 hover:text-blue-600">Tuyến xe</a>
-        <a href="datve.php" class="text-gray-600 hover:text-blue-600">Đặt vé</a>
+        <a href="tkuser/datve.php" class="text-gray-600 hover:text-blue-600">Đặt vé</a>
         <a href="#" class="text-gray-600 hover:text-blue-600">Liên hệ</a>
         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 0): ?>
   <!-- User avatar circle with dropdown -->
@@ -64,6 +64,20 @@ if(isset($_POST['login'])&&($_POST['login'])){
     <!-- Dropdown menu -->
     <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-32 bg-white rounded shadow-lg z-50">
       <form method="post" action="">
+        <a href="tkuser/guestuser.php" class="flex items-center gap-2 block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="toggleDropdown()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.485 0 4.797.755 6.879 2.047M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+          <span class="font-semibold">
+            <?php
+              if (isset($_SESSION['user'])) {
+                echo htmlspecialchars($_SESSION['user']);
+              } else {
+                echo 'Tài khoản';
+              }
+            ?>
+          </span>
+        </a>
         <button type="submit" name="logout" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Đăng xuất</button>
       </form>
     </div>

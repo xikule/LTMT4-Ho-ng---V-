@@ -7,6 +7,7 @@ if (isset($_POST['login']) && $_POST['login']) {
     $pass = $_POST['pass'];
     $role = checkuser($user, $pass);
     $_SESSION['role'] = $role;
+    $_SESSION['user'] = $user;
     if ($role == 1) {
         header("Location:pages/quantri.php");
         echo "<script>alert('Đăng nhập thành công!');</script>";
