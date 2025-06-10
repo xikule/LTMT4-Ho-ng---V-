@@ -1,3 +1,4 @@
+<?php include '../check_login.php'; ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -28,13 +29,13 @@
         <h3 class="text-xl font-semibold mb-2">Sửa chuyến đi</h3>
         <div class="bg-white p-4 rounded shadow">
             <?php
-                include('user.php');
+                include('../user.php');
                 $get_data=new data_chuyendi();
                 $select_cd = $get_data->select_id_cd($_GET['update']);
                 foreach($select_cd as $se_cd)
             ?>
             <?php
-                require 'connect.php';
+                require '../connect.php';
                 $sql = "SELECT id_NX, tenNX FROM nha_xe";
                 $result = $conn->query($sql);
             ?>
