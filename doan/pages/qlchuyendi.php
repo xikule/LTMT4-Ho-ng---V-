@@ -48,7 +48,7 @@
             </select>
             <input type="text" placeholder="Điểm khởi hành" class="w-full border p-2 rounded" name="diemKH">
             <input type="text" placeholder="Điểm kết thúc" class="w-full border p-2 rounded" name="diemKT">
-            <input type="time" placeholder="Lịch trình" class="w-full border p-2 rounded" name="lichTrinh">
+            <input type="date" placeholder="Lịch trình" class="w-full border p-2 rounded" name="lichTrinh">
             <input type="text" placeholder="Giá vé" class="w-full border p-2 rounded" name="gia">
             <input type="submit" class="bg-blue-600 text-white px-4 py-2 rounded" name="themchuyendi" value="Thêm chuyến">
           

@@ -1,4 +1,4 @@
-<!--tạm thời bỏ đi php "ghi chú"-->
+<!--tạm thời bỏ đi php kiểm tra login-->
 <?php
 
 ob_start(); // Bắt đầu bộ đệm đầu ra
@@ -43,9 +43,9 @@ if(isset($_POST['login'])&&($_POST['login'])){
       <div class="space-x-4 hidden md:flex items-center">
         <!--
         <a href="trangchu.php" class="text-gray-600 hover:text-blue-600">Trang chủ</a>
-        -->
         <a href="#" class="text-gray-600 hover:text-blue-600">Tuyến xe</a>
         <a href="tkuser/datve.php" class="text-gray-600 hover:text-blue-600">Đặt vé</a>
+        -->
         <!-- Trong phần navbar -->
         <div class="relative group">
           <a href="#" class="text-gray-600 hover:text-blue-600">Liên hệ</a>
@@ -104,15 +104,59 @@ if(isset($_POST['login'])&&($_POST['login'])){
   <section class="bg-blue-600 text-white py-20 text-center">
     <h2 class="text-4xl font-bold mb-4">Đặt vé xe khách dễ dàng và nhanh chóng</h2>
     <p class="mb-6">Tìm chuyến xe phù hợp, so sánh giá và đặt vé chỉ trong vài phút.</p>
-    <!-- Tìm kiếm -->
-    <form class="bg-white rounded-xl p-4 shadow-md max-w-2xl mx-auto text-gray-700 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <input type="text" placeholder="Điểm đi" class="p-2 rounded-lg border border-gray-300" />
-        <input type="text" placeholder="Điểm đến" class="p-2 rounded-lg border border-gray-300" />
-        <input type="date" class="p-2 rounded-lg border border-gray-300" />
+
+<!-- Form tìm kiếm chuyến xe -->
+    <form class="bg-white rounded-xl p-4 shadow-md max-w-2xl mx-auto text-gray-700 grid grid-cols-1 md:grid-cols-3 gap-4" method="get" action="">
+        <input type="text" name="diemKH" placeholder="Điểm đi" class="p-2 rounded-lg border border-gray-300" value="<?php echo isset($_GET['diemKH']) ? htmlspecialchars($_GET['diemKH']) : ''; ?>" />
+        <input type="text" name="diemKT" placeholder="Điểm đến" class="p-2 rounded-lg border border-gray-300" value="<?php echo isset($_GET['diemKT']) ? htmlspecialchars($_GET['diemKT']) : ''; ?>" />
+        <input type="date" name="lichTrinh" class="p-2 rounded-lg border border-gray-300" value="<?php echo isset($_GET['lichTrinh']) ? htmlspecialchars($_GET['lichTrinh']) : ''; ?>" />
         <div class="md:col-span-3 text-center">
           <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700">Tìm chuyến xe</button>
         </div>
-      </form>
+    </form>
+    <?php
+    $get_data = new data_chuyendi();
+    $diemKH = $_GET['diemKH'] ?? '';
+    $diemKT = $_GET['diemKT'] ?? '';
+    $lichTrinh = $_GET['lichTrinh'] ?? '';
+    if ($diemKH !== '' || $diemKT !== '' || $lichTrinh !== '') {
+    $result = $get_data->search_chuyendi($diemKH, $diemKT, $lichTrinh);
+
+    echo '<div class="max-w-2xl mx-auto mt-6 bg-white rounded-xl shadow-lg p-6 border-2 border-blue-400">';
+    if ($result && mysqli_num_rows($result) > 0)
+    {
+        $soLuong = mysqli_num_rows($result);
+        echo '<h3 class="text-xl font-bold mb-4 text-blue-700">Kết quả tìm kiếm chuyến xe (' . $soLuong . ' chuyến)</h3>';
+    }
+    echo '<table class="w-full text-left border-collapse">';
+    // ...phần còn lại giữ nguyên...
+    if ($result && mysqli_num_rows($result) > 0) {
+        echo '<table class="w-full text-left border-collapse">';
+        echo '<tr class="bg-blue-100 text-blue-800 font-semibold">
+                <th class="p-2 border-b border-blue-300">Nhà xe</th>
+                <th class="p-2 border-b border-blue-300">Điểm đi</th>
+                <th class="p-2 border-b border-blue-300">Điểm đến</th>
+                <th class="p-2 border-b border-blue-300">Lịch trình</th>
+                <th class="p-2 border-b border-blue-300">Giá vé</th>
+              </tr>';
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo '<tr class="hover:bg-blue-50">';
+            echo '<td class="p-2 border-b border-blue-100 text-blue-600 font-bold">'.htmlspecialchars($row['tenNX']).'</td>';
+            echo '<td class="p-2 border-b border-blue-100 text-blue-600 font-bold">'.htmlspecialchars($row['diemKH']).'</td>';
+            echo '<td class="p-2 border-b border-blue-100 text-blue-600 font-bold">'.htmlspecialchars($row['diemKT']).'</td>';
+            echo '<td class="p-2 border-b border-blue-100 text-blue-600 font-bold">'.htmlspecialchars($row['lichTrinh']).'</td>';
+            echo '<td class="p-2 border-b border-blue-100 text-blue-600 font-bold">'.number_format($row['gia']).' đ</td>';
+            echo '</tr>';
+        }
+        echo '</table>';
+    } else {
+        echo '<div class="text-red-600 font-semibold">Không tìm thấy chuyến xe phù hợp.</div>';
+    }
+    echo '</div>';
+}
+?>
+    </div>
+  </section>
     </div>
   </section>
   <div class="bg-gradient-to-r from-[#4a6074] to-[#5d6d89] text-white py-3 px-6 mt-[-40px] relative z-0">

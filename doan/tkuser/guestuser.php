@@ -19,8 +19,10 @@ if (!isset($_SESSION['user'])) {
         <div class="max-w-4xl mx-auto px-4 flex justify-between items-center">
             <a href="../trangchu.php" class="text-xl font-bold text-blue-600">XeKhach365</a>
             <div class="space-x-4 hidden md:flex items-center">
+                <!--
                 <a href="#" class="text-gray-600 hover:text-blue-600">Tuyến xe</a>
                 <a href="datve.php" class="text-gray-600 hover:text-blue-600">Đặt vé</a>
+                -->
                 <!-- Trong phần navbar -->
             <div class="relative group">
             <a href="#" class="text-gray-600 hover:text-blue-600">Liên hệ</a>
