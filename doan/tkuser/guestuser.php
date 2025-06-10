@@ -18,6 +18,22 @@ if (!isset($_SESSION['user'])) {
     <nav class="bg-white shadow-md py-4">
         <div class="max-w-4xl mx-auto px-4 flex justify-between items-center">
             <a href="../trangchu.php" class="text-xl font-bold text-blue-600">XeKhach365</a>
+            <div class="space-x-4 hidden md:flex items-center">
+                <a href="#" class="text-gray-600 hover:text-blue-600">Tuyến xe</a>
+                <a href="datve.php" class="text-gray-600 hover:text-blue-600">Đặt vé</a>
+                <!-- Trong phần navbar -->
+            <div class="relative group">
+            <a href="#" class="text-gray-600 hover:text-blue-600">Liên hệ</a>
+            <div class="absolute left-1/2 -translate-x-1/2 mt-2 w-72 bg-white rounded shadow-lg z-50 p-3 text-sm hidden group-hover:block">
+                <div>
+                <span class="text-blue-600 font-semibold">1900969681</span> - Để phản hồi về dịch vụ và xử lý sự cố
+                </div>
+                <div class="mt-1">
+                <span class="text-blue-600 font-semibold">1900888684</span> - Để đặt vé qua điện thoại (24/7)
+                </div>
+            </div>
+            </div>
+            </div>
         </div>
     </nav>
 
