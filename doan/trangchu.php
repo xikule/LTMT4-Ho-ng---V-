@@ -115,22 +115,17 @@ if(isset($_POST['login'])&&($_POST['login'])){
         </div>
     </form>
     <?php
-    $get_data = new data_chuyendi();
-    $diemKH = $_GET['diemKH'] ?? '';
-    $diemKT = $_GET['diemKT'] ?? '';
-    $lichTrinh = $_GET['lichTrinh'] ?? '';
-    if ($diemKH !== '' || $diemKT !== '' || $lichTrinh !== '') {
+$get_data = new data_chuyendi();
+$diemKH = $_GET['diemKH'] ?? '';
+$diemKT = $_GET['diemKT'] ?? '';
+$lichTrinh = $_GET['lichTrinh'] ?? '';
+if ($diemKH !== '' || $diemKT !== '' || $lichTrinh !== '') {
     $result = $get_data->search_chuyendi($diemKH, $diemKT, $lichTrinh);
 
     echo '<div class="max-w-2xl mx-auto mt-6 bg-white rounded-xl shadow-lg p-6 border-2 border-blue-400">';
-    if ($result && mysqli_num_rows($result) > 0)
-    {
+    if ($result && mysqli_num_rows($result) > 0) {
         $soLuong = mysqli_num_rows($result);
         echo '<h3 class="text-xl font-bold mb-4 text-blue-700">Kết quả tìm kiếm chuyến xe (' . $soLuong . ' chuyến)</h3>';
-    }
-    echo '<table class="w-full text-left border-collapse">';
-    // ...phần còn lại giữ nguyên...
-    if ($result && mysqli_num_rows($result) > 0) {
         echo '<table class="w-full text-left border-collapse">';
         echo '<tr class="bg-blue-100 text-blue-800 font-semibold">
                 <th class="p-2 border-b border-blue-300">Nhà xe</th>
@@ -150,6 +145,7 @@ if(isset($_POST['login'])&&($_POST['login'])){
         }
         echo '</table>';
     } else {
+        echo '<h3 class="text-xl font-bold mb-4 text-blue-700">Kết quả tìm kiếm chuyến xe</h3>';
         echo '<div class="text-red-600 font-semibold">Không tìm thấy chuyến xe phù hợp.</div>';
     }
     echo '</div>';
