@@ -12,6 +12,7 @@ function checkuser($user, $pass){
     return $kq[0]['role'] ?? -1; // Trả về vai trò của người dùng, nếu không tìm thấy thì trả về -1
 }
 include('connect.php');
+
         // Nhà xe
         class data_nhaxe
         {
@@ -165,6 +166,17 @@ include('connect.php');
                                         gia='$gia' where id_cd='$id_cd'";
                 $run= mysqli_query($conn, $sql);
                 return $run;
+            }
+        public function search_chuyendi($diemKH, $diemKT, $lichTrinh){
+            global $conn;
+            $sql = "SELECT chuyendi.id_cd, nha_xe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.gia 
+                    FROM chuyendi 
+                    JOIN nha_xe ON chuyendi.id_NX = nha_xe.id_NX
+                    WHERE 1";
+            if ($diemKH != '') $sql .= " AND chuyendi.diemKH LIKE '%$diemKH%'";
+            if ($diemKT != '') $sql .= " AND chuyendi.diemKT LIKE '%$diemKT%'";
+            if ($lichTrinh != '') $sql .= " AND chuyendi.lichTrinh = '$lichTrinh'";
+            return mysqli_query($conn, $sql);
             }
         }
 ?>

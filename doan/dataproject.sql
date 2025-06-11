@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2025 at 05:41 PM
+-- Generation Time: Jun 10, 2025 at 05:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,6 +36,14 @@ CREATE TABLE `chuyendi` (
   `gia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `chuyendi`
+--
+
+INSERT INTO `chuyendi` (`id_cd`, `id_NX`, `diemKH`, `diemKT`, `lichTrinh`, `gia`) VALUES
+(13, 1, 'hà nội', 'thanh hóa', '10:00:00', 300000),
+(14, 1, 'hà nội', 'thanh hóa', '00:09:00', 300000);
+
 -- --------------------------------------------------------
 
 --
@@ -53,8 +61,7 @@ CREATE TABLE `nha_xe` (
 --
 
 INSERT INTO `nha_xe` (`id_NX`, `tenNX`, `soDT`) VALUES
-(4, 'nhà xe nào đó', '0123'),
-(5, '', '');
+(1, 'testing', '01234');
 
 -- --------------------------------------------------------
 
@@ -94,13 +101,6 @@ CREATE TABLE `voucher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `voucher`
---
-
-INSERT INTO `voucher` (`id_voucher`, `code`, `discount_value`) VALUES
-(3, '', '');
-
---
 -- Indexes for dumped tables
 --
 
@@ -109,7 +109,7 @@ INSERT INTO `voucher` (`id_voucher`, `code`, `discount_value`) VALUES
 --
 ALTER TABLE `chuyendi`
   ADD PRIMARY KEY (`id_cd`),
-  ADD KEY `id_NX` (`id_NX`);
+  ADD KEY `chuyendi_ibfk_1` (`id_NX`);
 
 --
 -- Indexes for table `nha_xe`
@@ -137,13 +137,13 @@ ALTER TABLE `voucher`
 -- AUTO_INCREMENT for table `chuyendi`
 --
 ALTER TABLE `chuyendi`
-  MODIFY `id_cd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_cd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `nha_xe`
 --
 ALTER TABLE `nha_xe`
-  MODIFY `id_NX` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_NX` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `testing`
@@ -155,7 +155,7 @@ ALTER TABLE `testing`
 -- AUTO_INCREMENT for table `voucher`
 --
 ALTER TABLE `voucher`
-  MODIFY `id_voucher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_voucher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -165,7 +165,7 @@ ALTER TABLE `voucher`
 -- Constraints for table `chuyendi`
 --
 ALTER TABLE `chuyendi`
-  ADD CONSTRAINT `chuyendi_ibfk_1` FOREIGN KEY (`id_NX`) REFERENCES `nhaxe` (`id_NX`);
+  ADD CONSTRAINT `chuyendi_ibfk_1` FOREIGN KEY (`id_NX`) REFERENCES `nha_xe` (`id_NX`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
