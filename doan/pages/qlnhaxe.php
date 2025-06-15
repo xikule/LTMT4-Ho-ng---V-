@@ -1,4 +1,3 @@
-<?php include '../check_login.php'; ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -35,7 +34,7 @@
 
             <?php
                   include('../user.php');//Chèn trang control vào bài
-                  $get_data=new data_nhaxe();//Gọi đến class data
+                  $get_data=new data_nha_xe();//Gọi đến class data
                   $select=$get_data->select_NX();//Gọi function select trong trang control
             ?>
 
@@ -47,7 +46,7 @@
                                               $_POST['soDT']);
                   if($insert) 
                   echo "<script>alert('Thêm nhà xe thành công')</script>";
-                  else echo "<script>alert('Thêm không thành công')</script>"; 
+                  else echo "<script>alert('Thêm không thành công') </script>"; 
                   header('location:qlnhaxe.php');
                 }
             ?>

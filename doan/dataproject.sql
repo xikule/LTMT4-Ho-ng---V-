@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 10, 2025 at 05:55 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th6 15, 2025 lúc 08:39 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dataproject`
+-- Cơ sở dữ liệu: `dataproject`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chuyendi`
+-- Cấu trúc bảng cho bảng `chuyendi`
 --
 
 CREATE TABLE `chuyendi` (
@@ -37,61 +37,43 @@ CREATE TABLE `chuyendi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chuyendi`
+-- Đang đổ dữ liệu cho bảng `chuyendi`
 --
 
 INSERT INTO `chuyendi` (`id_cd`, `id_NX`, `diemKH`, `diemKT`, `lichTrinh`, `gia`) VALUES
-(13, 1, 'hà nội', 'thanh hóa', '10:00:00', 300000),
-(14, 1, 'hà nội', 'thanh hóa', '00:09:00', 300000);
+(6, 7, 'Ha Noi', 'HCM', '00:00:00', 500000),
+(7, 6, 'Ha Noi', 'Hai Phong', '00:27:00', 100000),
+(8, 8, 'Hai Phong', 'Ha Noi', '15:30:00', 200000);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nha_xe`
---
-
-CREATE TABLE `nha_xe` (
-  `id_NX` int(11) NOT NULL,
-  `tenNX` varchar(100) DEFAULT NULL,
-  `soDT` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `nha_xe`
---
-
-INSERT INTO `nha_xe` (`id_NX`, `tenNX`, `soDT`) VALUES
-(1, 'testing', '01234');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `testing`
+-- Cấu trúc bảng cho bảng `testing`
 --
 
 CREATE TABLE `testing` (
   `id` int(11) NOT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `address` varchar(10) DEFAULT NULL,
+  `user` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `user` varchar(20) NOT NULL,
   `pass` int(20) NOT NULL,
   `role` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `testing`
+-- Đang đổ dữ liệu cho bảng `testing`
 --
 
-INSERT INTO `testing` (`id`, `name`, `address`, `email`, `user`, `pass`, `role`) VALUES
-(1, NULL, NULL, NULL, 'admin', 123, 0),
-(2, NULL, NULL, NULL, 'admin1', 111, 1),
-(3, 'admin3', NULL, 'nn7504791@gmail.com', '', 1234, 0);
+INSERT INTO `testing` (`id`, `user`, `email`, `pass`, `role`) VALUES
+(1, NULL, NULL, 123, 0),
+(2, NULL, NULL, 111, 1),
+(3, 'admin3', 'nn7504791@gmail.com', 1234, 0),
+(4, '', 'd@gmail.com', 1, 0),
+(6, 'lexuanvu', 'd2@gmail.com', 1, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `voucher`
+-- Cấu trúc bảng cho bảng `voucher`
 --
 
 CREATE TABLE `voucher` (
@@ -101,71 +83,58 @@ CREATE TABLE `voucher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Đang đổ dữ liệu cho bảng `voucher`
+--
+
+INSERT INTO `voucher` (`id_voucher`, `code`, `discount_value`) VALUES
+(4, 'giam10', '10'),
+(5, 'giam20', '20'),
+(6, 'giam30', '30');
+
+--
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `chuyendi`
+-- Chỉ mục cho bảng `chuyendi`
 --
 ALTER TABLE `chuyendi`
   ADD PRIMARY KEY (`id_cd`),
-  ADD KEY `chuyendi_ibfk_1` (`id_NX`);
+  ADD KEY `id_NX` (`id_NX`);
 
 --
--- Indexes for table `nha_xe`
---
-ALTER TABLE `nha_xe`
-  ADD PRIMARY KEY (`id_NX`);
-
---
--- Indexes for table `testing`
+-- Chỉ mục cho bảng `testing`
 --
 ALTER TABLE `testing`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `voucher`
+-- Chỉ mục cho bảng `voucher`
 --
 ALTER TABLE `voucher`
   ADD PRIMARY KEY (`id_voucher`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `chuyendi`
+-- AUTO_INCREMENT cho bảng `chuyendi`
 --
 ALTER TABLE `chuyendi`
-  MODIFY `id_cd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_cd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `nha_xe`
---
-ALTER TABLE `nha_xe`
-  MODIFY `id_NX` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `testing`
+-- AUTO_INCREMENT cho bảng `testing`
 --
 ALTER TABLE `testing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `voucher`
+-- AUTO_INCREMENT cho bảng `voucher`
 --
 ALTER TABLE `voucher`
-  MODIFY `id_voucher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `chuyendi`
---
-ALTER TABLE `chuyendi`
-  ADD CONSTRAINT `chuyendi_ibfk_1` FOREIGN KEY (`id_NX`) REFERENCES `nha_xe` (`id_NX`);
+  MODIFY `id_voucher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

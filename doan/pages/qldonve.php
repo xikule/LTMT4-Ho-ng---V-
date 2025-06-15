@@ -1,6 +1,7 @@
-
-<?php include '../check_login.php'; ?>
-
+<?php
+include '../user.php';
+include '../connect.php';
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -30,15 +31,40 @@
       <section id="don-ve">
         <h3 class="text-xl font-semibold mb-2">Quản lý đơn vé</h3>
         <div class="bg-white p-4 rounded shadow">
-          <ul class="divide-y">
-            <li class="py-2 flex justify-between items-center">
-              <span>Đơn #001 | Mã khách hàng #001 | 2 vé | 500.000 VND </span>
-              <div class="space-x-2">
-                <button class="bg-yellow-400 px-2 py-1 rounded text-white">Sửa</button>
-                <button class="bg-red-500 px-2 py-1 rounded text-white">Xóa</button>
-              </div>
-            </li>
-          </ul>
+          <table border="1" cellpadding="8" cellspacing="0" class="min-w-full">
+            <thead>
+              <tr class="bg-gray-200 text-gray-600 uppercase text-sm">
+                <th class="py-3 px-4">ID Vé</th>
+                <th class="py-3 px-4">ID Chuyến đi</th>
+                <th class="py-3 px-4">ID User</th>
+                <th class="py-3 px-4">Tuyến đường</th>
+                <th class="py-3 px-4">Giờ khởi hành</th>
+                <th class="py-3 px-4">Ngày đi</th>
+                <th class="py-3 px-4">Ghế</th>
+                <th class="py-3 px-4">Tổng giá</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-700 text-sm text-center" >
+              <?php
+              $sql = "SELECT * FROM ve ORDER BY ngayDat ASC";
+              $result = mysqli_query($conn, $sql);
+              while ($row = mysqli_fetch_assoc($result)):
+              ?>
+              <tr class="hover:bg-gray-100">
+                <td class="py-2 px-4"><?= htmlspecialchars($row['id_ve']) ?></td>
+                <td class="py-2 px-4"><?= htmlspecialchars($row['id_cd']) ?></td>
+                <td class="py-2 px-4"><?= htmlspecialchars($row['id']) ?></td>
+                <td class="py-2 px-4"><?= htmlspecialchars($row['tuyenDuong']) ?></td>
+                <td class="py-2 px-4"><?= htmlspecialchars($row['lichTrinh']) ?></td>
+                <td class="py-2 px-4"><?= htmlspecialchars($row['ngayDat']) ?></td>
+                <td class="py-2 px-4"><?= htmlspecialchars($row['ghe']) ?></td>
+                <td class="py-2 px-4"><?= htmlspecialchars($row['tongGia']) ?></td>
+                <td class="py-2 px-4">
+                </td>
+              </tr>
+              <?php endwhile; ?>
+            </tbody>
+          </table>
         </div>
       </section>
 

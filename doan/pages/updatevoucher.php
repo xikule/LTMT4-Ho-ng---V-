@@ -1,4 +1,3 @@
-<?php include '../check_login.php'; ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -30,10 +29,10 @@
         <div class="bg-white p-4 rounded shadow">
 
             <?php
-                include('../user.php');
+include '../user.php';
                 $get_data=new data_voucher();
-                $select_NX=$get_data->select_id_voucher($_GET['up']);
-                foreach($select_NX as $se_voucher)
+                $select=$get_data->select_id_voucher($_GET['up']);
+                foreach($select as $se_voucher)
             ?>
 
         <form class="space-y-2 mb-4" method="POST" >

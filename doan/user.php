@@ -12,9 +12,42 @@ function checkuser($user, $pass){
     return $kq[0]['role'] ?? -1; // Trả về vai trò của người dùng, nếu không tìm thấy thì trả về -1
 }
 include('connect.php');
-
+        //testing user
+        class data_testing
+        {
+            public function register($user, $email, $pass)
+            {
+                global $conn;
+                $sql="insert into testing(user,email,pass)
+                        values('$user','$email','$pass')";
+                echo $sql;
+                $run=mysqli_query($conn,$sql);
+                return $run;
+            }
+            public function select_user()
+            {
+                global $conn;
+                $sql="select * from testing";
+                $run= mysqli_query($conn,$sql);
+                return $run;
+            }
+            public function delete_user($id_user)
+            {
+                global $conn;
+                $sql="delete from testing where id_user='$id_user'";
+                $run=mysqli_query($conn, $sql);
+                return $run;
+            }
+            public function select_id_user($id_user)
+            {
+              global $conn;
+              $sql="select * from testing where id_user='$id_user'";
+              $run=mysqli_query($conn, $sql);
+              return $run;
+            }
+        }
         // Nhà xe
-        class data_nhaxe
+        class data_nha_xe
         {
         public function register($tenNX,$soDT)
             {
@@ -179,4 +212,42 @@ include('connect.php');
             return mysqli_query($conn, $sql);
             }
         }
+
+        // Vé
+        class data_ve
+        {
+        public function register($id_cd,$id,$tuyenDuong,$lichTrinh,$ngayDat,$ghe,$tongGia)
+            {
+                global $conn;
+                $sql="insert into ve(id_cd,id,tuyenDuong,lichTrinh,ngayDat,ghe,tongGia)
+                        values('$id_cd','$id','$tuyenDuong','$lichTrinh','$ngayDat','$ghe','$tongGia')";
+                echo $sql;
+                $run=mysqli_query($conn,$sql);
+                return $run;
+            }
+        public function select_ve()
+            {
+                global $conn;
+                $sql = "SELECT ve.id_ve, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, ve.soLuong, ve.ngayDat, ve.trangThai 
+                        FROM ve 
+                        JOIN chuyendi ON ve.id_cd = chuyendi.id_cd";
+                $run= mysqli_query($conn,$sql);
+                return $run;
+            }
+        public function delete_ve($id_ve)
+            {
+            global $conn;
+            $sql="delete from ve where id_ve='$id_ve'";
+            $run=mysqli_query($conn, $sql);
+            return $run;
+            }
+        public function select_id_ve($id_ve)
+            {
+              global $conn;
+              $sql="select * from ve where id_ve='$id_ve'";
+              $run=mysqli_query($conn, $sql);
+              return $run;
+            }
+        }
+
 ?>

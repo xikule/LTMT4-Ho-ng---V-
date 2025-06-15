@@ -1,4 +1,3 @@
-<?php include '../check_login.php'; ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -60,10 +59,11 @@
                     <span>Mã: <?php echo $se_pro['code']?> giảm <?php echo $se_pro['discount_value']?>%</span>
                     <div class="space-x-2">
                     <button class="bg-yellow-400 px-2 py-1 rounded text-white">
-                    <a href="updatevoucher.php?up=<?php echo $se_pro['id_voucher']?>">Sửa</a></button>
-                  <button class="bg-red-500 px-2 py-1 rounded text-white">
-                    <a href="deletevoucher.php?del=<?php echo $se_pro['id_voucher']?>" onClick="if(confirm('Bạn có chắc chắn muốn xóa')) return true; else return false;">Xóa</a>
-                  </button>
+                      <a href="updatevoucher.php?up=<?php echo $se_pro['id_voucher']?>">Sửa</a>
+                    </button>
+                    <button class="bg-red-500 px-2 py-1 rounded text-white">
+                      <a href="deletevoucher.php?del=<?php echo $se_pro['id_voucher']?>" onClick="if(confirm('Bạn có chắc chắn muốn xóa')) return true; else return false;">Xóa</a>
+                    </button>
                     </div>
                   </li>
                 </ul>

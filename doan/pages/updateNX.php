@@ -1,4 +1,3 @@
-<?php include '../check_login.php'; ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -30,8 +29,8 @@
         <div class="bg-white p-4 rounded shadow">
 
             <?php
-                include('../user.php');
-                $get_data=new data_nhaxe();
+                include '../user.php';
+                $get_data=new data_nha_xe();
                 $select_NX=$get_data->select_id_NX($_GET['up']);
                 foreach($select_NX as $se_NX)
             ?>
