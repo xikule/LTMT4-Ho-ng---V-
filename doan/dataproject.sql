@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 16, 2025 lúc 01:18 PM
+-- Thời gian đã tạo: Th6 20, 2025 lúc 05:57 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -24,18 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chi_tiet_ve`
---
-
-CREATE TABLE `chi_tiet_ve` (
-  `id_ct` int(11) NOT NULL,
-  `id_ve` int(11) NOT NULL,
-  `so_ghe` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Cấu trúc bảng cho bảng `chuyendi`
 --
 
@@ -45,6 +33,7 @@ CREATE TABLE `chuyendi` (
   `diemKH` varchar(100) NOT NULL,
   `diemKT` varchar(100) NOT NULL,
   `lichTrinh` time NOT NULL,
+  `ngayDi` date NOT NULL,
   `gia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -52,10 +41,41 @@ CREATE TABLE `chuyendi` (
 -- Đang đổ dữ liệu cho bảng `chuyendi`
 --
 
-INSERT INTO `chuyendi` (`id_cd`, `id_NX`, `diemKH`, `diemKT`, `lichTrinh`, `gia`) VALUES
-(6, 7, 'Ha Noi', 'HCM', '00:00:00', 500000),
-(7, 6, 'Ha Noi', 'Hai Phong', '00:27:00', 100000),
-(8, 8, 'Hai Phong', 'Ha Noi', '15:30:00', 200000);
+INSERT INTO `chuyendi` (`id_cd`, `id_NX`, `diemKH`, `diemKT`, `lichTrinh`, `ngayDi`, `gia`) VALUES
+(9, 9, 'Ha noi', 'Hai Phong', '07:30:00', '2025-03-07', 250000),
+(12, 9, 'Ha noi', 'Hai Phong', '07:30:00', '2025-04-07', 250000),
+(13, 9, 'Ha noi', 'Hai Phong', '07:30:00', '2025-05-07', 250000),
+(14, 9, 'Hai Phong', 'Ha Noi', '08:00:00', '2025-03-07', 250000),
+(15, 9, 'Hai Phong', 'Ha Noi', '08:00:00', '2025-04-07', 250000),
+(16, 9, 'Hai Phong', 'Ha Noi', '08:00:00', '2025-05-07', 250000),
+(17, 10, 'TP HCM', 'Da Lat', '09:00:00', '2025-03-07', 290000),
+(18, 10, 'TP HCM', 'Da Lat', '09:00:00', '2025-04-07', 290000),
+(19, 10, 'TP HCM', 'Da Lat', '09:00:00', '2025-05-07', 290000),
+(20, 10, 'Da Lat', 'TP HCM', '09:30:00', '2025-05-07', 290000),
+(21, 0, 'Da Lat', 'TP HCM', '09:30:00', '2025-04-07', 290000),
+(22, 0, 'Da Lat', 'TP HCM', '00:00:00', '2025-04-07', 290000),
+(23, 10, 'Da Lat', 'TP HCM', '00:00:00', '2025-05-07', 290000),
+(24, 11, 'Da Lat', 'TP HCM', '14:30:00', '2025-05-07', 280000),
+(25, 11, 'Da Lat', 'TP HCM', '14:30:00', '2025-06-07', 280000),
+(27, 11, 'Da Lat', 'Da Nang', '10:45:00', '2025-03-07', 420000),
+(28, 11, 'Da Lat', 'Da Nang', '10:45:00', '2025-05-07', 420000),
+(29, 11, 'Da Lat', 'Da Nang', '10:45:00', '2025-07-07', 420000),
+(30, 12, 'Hai Phong', 'Thanh Hoa', '08:00:00', '2025-04-07', 320000),
+(31, 12, 'Hai Phong', 'Thanh Hoa', '08:00:00', '2025-06-07', 320000),
+(32, 12, 'Hai Phong', 'Thanh Hoa', '08:00:00', '2025-08-07', 320000),
+(33, 12, 'Thanh Hoa', 'Hai Phong', '08:45:00', '2025-05-07', 310000),
+(34, 12, 'Thanh Hoa', 'Hai Phong', '10:00:00', '2025-05-07', 310000),
+(35, 13, 'Nghe An', 'Ha Noi', '06:00:00', '2025-07-07', 270000),
+(36, 13, 'Nghe An', 'Ha Noi', '06:00:00', '2025-08-07', 270000),
+(37, 13, 'Nghe An', 'Ha Noi', '06:00:00', '2025-09-07', 270000),
+(38, 13, 'Ha Noi', 'Nghe An', '05:30:00', '2025-08-07', 270000),
+(39, 13, 'Ha Noi', 'Nghe An', '05:30:00', '2025-07-07', 270000),
+(40, 13, 'Ha Noi', 'Nghe An', '06:30:00', '2025-10-07', 270000),
+(41, 14, 'Ha Noi', 'Sapa', '04:00:00', '2025-04-07', 340000),
+(42, 14, 'Ha Noi', 'Sapa', '06:00:00', '2025-04-07', 340000),
+(43, 14, 'Ha Noi', 'Sapa', '08:00:00', '2025-04-07', 340000),
+(44, 14, 'Sapa', 'Ha Noi', '08:00:00', '2025-05-07', 340000),
+(45, 14, 'Sapa', 'Ha Noi', '10:00:00', '2025-05-07', 340000);
 
 -- --------------------------------------------------------
 
@@ -74,17 +94,20 @@ CREATE TABLE `nha_xe` (
 --
 
 INSERT INTO `nha_xe` (`id_NX`, `tenNX`, `soDT`) VALUES
-(6, 'test', '2424242424'),
-(7, 'test2', '22222222'),
-(8, 'test3', '3333333333');
+(9, 'Phương Trang (FUTA Bus)', '0999999999'),
+(10, 'Hoàng Long', '0988888888'),
+(11, 'Mai Linh', '0977777777'),
+(12, 'Văn Minh', '0966666666'),
+(13, 'An Phú Quý', '0955555555'),
+(14, 'Phong Phú', '0944444444');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `testing`
+-- Cấu trúc bảng cho bảng `user`
 --
 
-CREATE TABLE `testing` (
+CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `user` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
@@ -93,14 +116,12 @@ CREATE TABLE `testing` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `testing`
+-- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `testing` (`id`, `user`, `email`, `pass`, `role`) VALUES
-(1, NULL, NULL, 123, 0),
-(2, NULL, NULL, 111, 1),
+INSERT INTO `user` (`id`, `user`, `email`, `pass`, `role`) VALUES
+(1, 'admin', NULL, 1, 1),
 (3, 'admin3', 'nn7504791@gmail.com', 1234, 0),
-(4, '', 'd@gmail.com', 1, 0),
 (6, 'lexuanvu', 'd2@gmail.com', 1, 0);
 
 -- --------------------------------------------------------
@@ -115,17 +136,25 @@ CREATE TABLE `ve` (
   `id` int(11) NOT NULL,
   `tuyenDuong` varchar(100) NOT NULL,
   `lichTrinh` time NOT NULL,
-  `ngayDat` date NOT NULL,
+  `ngayDi` date NOT NULL,
   `ghe` varchar(100) NOT NULL,
-  `tongGia` varchar(100) DEFAULT NULL
+  `tongGia` varchar(100) DEFAULT NULL,
+  `trangthai` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `ve`
 --
 
-INSERT INTO `ve` (`id_ve`, `id_cd`, `id`, `tuyenDuong`, `lichTrinh`, `ngayDat`, `ghe`, `tongGia`) VALUES
-(31, 7, 6, 'Ha Noi - Hai Phong', '00:27:00', '2025-06-18', '6,7', '180000');
+INSERT INTO `ve` (`id_ve`, `id_cd`, `id`, `tuyenDuong`, `lichTrinh`, `ngayDi`, `ghe`, `tongGia`, `trangthai`) VALUES
+(48, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '11,15,19', '750000', 'Huy'),
+(49, 12, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-04-07', '16,14', '500000', 'Da hoan tien'),
+(53, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '8,12', '500000', 'Da thanh toan'),
+(55, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '13,9', '500000', 'Huy'),
+(56, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '6,10', '500000', 'Da thanh toan'),
+(57, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '3,7,16', '750000', 'Da thanh toan'),
+(58, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '22,25', '500000', 'Da thanh toan'),
+(59, 13, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-05-07', '1,2,3,4,8,7,6,5,9,10,13,14,18,17,21,25,29,30,26,22,23,27,31,32,28,24,20,16,12,11,15,19', '5600000', 'Da thanh toan');
 
 -- --------------------------------------------------------
 
@@ -153,13 +182,6 @@ INSERT INTO `voucher` (`id_voucher`, `code`, `discount_value`) VALUES
 --
 
 --
--- Chỉ mục cho bảng `chi_tiet_ve`
---
-ALTER TABLE `chi_tiet_ve`
-  ADD PRIMARY KEY (`id_ct`),
-  ADD UNIQUE KEY `id_ve` (`id_ve`,`so_ghe`);
-
---
 -- Chỉ mục cho bảng `chuyendi`
 --
 ALTER TABLE `chuyendi`
@@ -173,9 +195,9 @@ ALTER TABLE `nha_xe`
   ADD PRIMARY KEY (`id_NX`);
 
 --
--- Chỉ mục cho bảng `testing`
+-- Chỉ mục cho bảng `user`
 --
-ALTER TABLE `testing`
+ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -184,7 +206,7 @@ ALTER TABLE `testing`
 ALTER TABLE `ve`
   ADD PRIMARY KEY (`id_ve`),
   ADD KEY `id_cd` (`id_cd`),
-  ADD KEY `fk_ve_testing` (`id`);
+  ADD KEY `fk_ve_user` (`id`);
 
 --
 -- Chỉ mục cho bảng `voucher`
@@ -197,34 +219,28 @@ ALTER TABLE `voucher`
 --
 
 --
--- AUTO_INCREMENT cho bảng `chi_tiet_ve`
---
-ALTER TABLE `chi_tiet_ve`
-  MODIFY `id_ct` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT cho bảng `chuyendi`
 --
 ALTER TABLE `chuyendi`
-  MODIFY `id_cd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_cd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT cho bảng `nha_xe`
 --
 ALTER TABLE `nha_xe`
-  MODIFY `id_NX` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_NX` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT cho bảng `testing`
+-- AUTO_INCREMENT cho bảng `user`
 --
-ALTER TABLE `testing`
+ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `ve`
 --
 ALTER TABLE `ve`
-  MODIFY `id_ve` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_ve` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT cho bảng `voucher`
@@ -237,16 +253,11 @@ ALTER TABLE `voucher`
 --
 
 --
--- Các ràng buộc cho bảng `chi_tiet_ve`
---
-ALTER TABLE `chi_tiet_ve`
-  ADD CONSTRAINT `chi_tiet_ve_ibfk_1` FOREIGN KEY (`id_ve`) REFERENCES `ve` (`id_ve`) ON DELETE CASCADE;
-
---
 -- Các ràng buộc cho bảng `ve`
 --
 ALTER TABLE `ve`
-  ADD CONSTRAINT `fk_ve_testing` FOREIGN KEY (`id`) REFERENCES `testing` (`id`),
+  ADD CONSTRAINT `fk_ve_testing` FOREIGN KEY (`id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `fk_ve_user` FOREIGN KEY (`id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `ve_ibfk_1` FOREIGN KEY (`id_cd`) REFERENCES `chuyendi` (`id_cd`) ON DELETE CASCADE;
 COMMIT;
 
