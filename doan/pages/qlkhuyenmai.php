@@ -1,3 +1,15 @@
+<?php
+session_start();
+if (isset($_POST['logout'])) {
+    session_destroy();
+     header("Location: ../trangchu.php");
+    exit;
+}
+if (!isset($_SESSION['user']) || !isset($_SESSION['role']) || $_SESSION['role'] != 1) {
+    header('Location: ../trangchu.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -7,11 +19,21 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+  <nav class="bg-white shadow flex items-center justify-between px-8 py-3">
+  <span class="text-2xl font-bold text-blue-600"><a href="quantri.php">Admin Panel</a></span>
+  <div class="flex items-center space-x-4">
+    <form method="post" action="">
+      <button type="submit" name="logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded font-semibold">
+        Đăng xuất
+      </button>
+    </form>
+  </div>
+</nav>
   <div class="flex min-h-screen">
     
     <!-- Sidebar -->
     <aside class="w-64 bg-white shadow-lg p-6 space-y-4">
-      <h2 class="text-2xl font-bold text-blue-600 mb-4"><a href="quantri.php">Admin Panel</a></h2>
       <nav class="space-y-2">
         <a href="qlchuyendi.php" class="block py-2 px-3 rounded hover:bg-blue-100">Quản lý chuyến đi</a>
         <a href="qlnhaxe.php" class="block py-2 px-3 rounded hover:bg-blue-100">Quản lý nhà xe</a>

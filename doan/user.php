@@ -1,49 +1,17 @@
 <?php
 
-function checkuser($user, $pass){
-    $conn = connectdb(); // Gọi hàm kết nối CSDL (giả sử hàm connectdb() đã được định nghĩa trước)
-
-    $stmt = $conn->prepare("SELECT * FROM testing WHERE user='".$user."' AND pass='".$pass."'"); 
-
-
-    $stmt->execute(); // Thực thi câu lệnh SQL
-    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    $kq = $stmt->fetchAll();
-    return $kq[0]['role'] ?? -1; // Trả về vai trò của người dùng, nếu không tìm thấy thì trả về -1
-}
 include('connect.php');
         //testing user
-        class data_testing
+        class data_user
         {
             public function register($user, $email, $pass)
             {
                 global $conn;
-                $sql="insert into testing(user,email,pass)
+                $sql="insert into user(user,email,pass)
                         values('$user','$email','$pass')";
                 echo $sql;
                 $run=mysqli_query($conn,$sql);
                 return $run;
-            }
-            public function select_user()
-            {
-                global $conn;
-                $sql="select * from testing";
-                $run= mysqli_query($conn,$sql);
-                return $run;
-            }
-            public function delete_user($id_user)
-            {
-                global $conn;
-                $sql="delete from testing where id_user='$id_user'";
-                $run=mysqli_query($conn, $sql);
-                return $run;
-            }
-            public function select_id_user($id_user)
-            {
-              global $conn;
-              $sql="select * from testing where id_user='$id_user'";
-              $run=mysqli_query($conn, $sql);
-              return $run;
             }
         }
         // Nhà xe
@@ -87,17 +55,6 @@ include('connect.php');
                 $sql= "update nha_xe set tenNX='$tenNX',
                                         soDT='$soDT' where id_NX='$id_NX'";
                 $run= mysqli_query($conn, $sql);
-                return $run;
-            }
-        }
-        class data_user{
-            public function register($fullname, $email, $pass)
-            {
-                global $conn;
-                $sql="insert into testing(user,email,pass)
-                        values('$fullname','$email','$pass')";
-                echo $sql;
-                $run=mysqli_query($conn,$sql);
                 return $run;
             }
         }
@@ -149,11 +106,11 @@ include('connect.php');
             // Chuyến đi
         class data_chuyendi
         {
-        public function register($id_NX,$diemKH,$diemKT,$lichTrinh,$gia)
+        public function register($id_NX,$diemKH,$diemKT,$lichTrinh,$ngayDi,$gia)
             {
                 global $conn;
-                $sql="insert into chuyendi(id_NX,diemKH,diemKT,lichTrinh,gia)
-                        values('$id_NX','$diemKH','$diemKT','$lichTrinh','$gia')";
+                $sql="insert into chuyendi(id_NX,diemKH,diemKT,lichTrinh,ngayDi,gia)
+                        values('$id_NX','$diemKH','$diemKT','$lichTrinh','$ngayDi','$gia')";
                 echo $sql;
                 $run=mysqli_query($conn,$sql);
                 return $run;
@@ -161,7 +118,7 @@ include('connect.php');
         public function select_chuyendi()
             {
                 global $conn;
-                $sql = "select chuyendi.id_cd, nha_xe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.gia 
+                $sql = "select chuyendi.id_cd, nha_xe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.ngayDi, chuyendi.gia 
                         from chuyendi join nha_xe on chuyendi.id_NX = nha_xe.id_NX";
                 $run= mysqli_query($conn,$sql);
                 return $run;
@@ -184,43 +141,52 @@ include('connect.php');
         public function select_id_cd($id_cd)
             {
               global $conn;
-              $sql="select chuyendi.id_cd, nha_xe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.gia 
+              $sql="select chuyendi.id_cd, nha_xe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.ngayDi, chuyendi.gia 
                         from chuyendi join nha_xe on chuyendi.id_NX = nha_xe.id_NX where id_cd='$id_cd'";
               $run=mysqli_query($conn, $sql);
               return $run;
             }
-        public function update_chuyendi($id_NX,$diemKH,$diemKT,$lichTrinh,$gia,$id_cd)
+        public function update_chuyendi($id_NX,$diemKH,$diemKT,$lichTrinh,$ngayDi,$gia,$id_cd)
             {
                 global $conn;
                 $sql= "update chuyendi set id_NX='$id_NX',
                                         diemKH='$diemKH',
                                         diemKT='$diemKT',
                                         lichTrinh='$lichTrinh',
+                                        ngayDi='$ngayDi',
                                         gia='$gia' where id_cd='$id_cd'";
                 $run= mysqli_query($conn, $sql);
                 return $run;
             }
-        public function search_chuyendi($diemKH, $diemKT, $lichTrinh){
+        public function search_chuyendi($diemKH, $diemKT, $lichTrinh, $ngayDi) {
             global $conn;
-            $sql = "SELECT chuyendi.id_cd, nha_xe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.gia 
+            $sql = "SELECT chuyendi.id_cd, nha_xe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.gia, chuyendi.ngayDi 
                     FROM chuyendi 
                     JOIN nha_xe ON chuyendi.id_NX = nha_xe.id_NX
                     WHERE 1";
             if ($diemKH != '') $sql .= " AND chuyendi.diemKH LIKE '%$diemKH%'";
             if ($diemKT != '') $sql .= " AND chuyendi.diemKT LIKE '%$diemKT%'";
             if ($lichTrinh != '') $sql .= " AND chuyendi.lichTrinh = '$lichTrinh'";
+            if ($ngayDi != '') $sql .= " AND chuyendi.ngayDi = '$ngayDi'";
+            return mysqli_query($conn, $sql);
+            }
+        public function search_chuyendi_by_tenNX($tenNX) {
+            global $conn;
+            $sql = "SELECT chuyendi.*, nha_xe.tenNX 
+                    FROM chuyendi 
+                    JOIN nha_xe ON chuyendi.id_NX = nha_xe.id_NX
+                    WHERE nha_xe.tenNX LIKE '%$tenNX%'";
             return mysqli_query($conn, $sql);
             }
         }
-
         // Vé
         class data_ve
         {
-        public function register($id_cd,$id,$tuyenDuong,$lichTrinh,$ngayDat,$ghe,$tongGia)
+        public function register($id_cd,$id,$tuyenDuong,$lichTrinh,$ngayDi,$ghe,$tongGia, $trangthai)
             {
                 global $conn;
-                $sql="insert into ve(id_cd,id,tuyenDuong,lichTrinh,ngayDat,ghe,tongGia)
-                        values('$id_cd','$id','$tuyenDuong','$lichTrinh','$ngayDat','$ghe','$tongGia')";
+                $sql="insert into ve(id_cd,id,tuyenDuong,lichTrinh,ngayDi,ghe,tongGia,trangthai)
+                        values('$id_cd','$id','$tuyenDuong','$lichTrinh','$ngayDi','$ghe','$tongGia','$trangthai')";
                 echo $sql;
                 $run=mysqli_query($conn,$sql);
                 return $run;
@@ -228,7 +194,7 @@ include('connect.php');
         public function select_ve()
             {
                 global $conn;
-                $sql = "SELECT ve.id_ve, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, ve.soLuong, ve.ngayDat, ve.trangThai 
+                $sql = "SELECT ve.id_ve, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, ve.soLuong, ve.ngayDi, ve.trangThai 
                         FROM ve 
                         JOIN chuyendi ON ve.id_cd = chuyendi.id_cd";
                 $run= mysqli_query($conn,$sql);

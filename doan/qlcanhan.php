@@ -1,5 +1,15 @@
 <?php
+include "connect.php";
 session_start();
+$id = $_SESSION['id'];
+
+// Xử lý đăng xuất
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header("Location:trangchu.php");
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -42,12 +52,6 @@ session_start();
                             </svg>
                             <span class="font-semibold"><?= htmlspecialchars($_SESSION['user']); ?></span>
                         </a>
-                        <a href="qlcanhan.php" class="flex items-center gap-2 block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h3m-7 0a4 4 0 014-4V7a4 4 0 00-4-4H7a4 4 0 00-4 4v10a4 4 0 004 4h10a4 4 0 004-4v-4a4 4 0 00-4-4h-3" />
-                            </svg>
-                            <span>Xem vé đã đặt</span>
-                        </a>
                         <form method="post" action="">
                             <button type="submit" name="logout" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Đăng xuất</button>
                         </form>
@@ -60,57 +64,98 @@ session_start();
     </div>
 </nav>
 <!-- Danh sách vé đã đặt mua -->
-<div class="max-w-3xl mx-auto mt-6 bg-white rounded-xl shadow-lg p-6 border-2 border-blue-400">
+ <div class="flex justify-center mt-8">
+    <div class="w-full max-w-6xl bg-white rounded-2xl shadow-xl p-6 border-2 border-blue-400">
     <?php
     include "connect.php";
-
     $id = $_SESSION['id'];
-
-    // Lấy danh sách vé đã đặt của user, có tên nhà xe
+    // Lấy danh sách vé đã đặt của user
     $sql = "SELECT ve.*, chuyendi.*, nha_xe.tenNX
             FROM ve
             JOIN chuyendi ON ve.id_cd = chuyendi.id_cd
             JOIN nha_xe ON chuyendi.id_NX = nha_xe.id_NX
             WHERE ve.id = '$id'
-            ORDER BY ve.ngayDat DESC";
+            ORDER BY ve.ngayDi DESC";
     $result = mysqli_query($conn, $sql);
     ?>
     <h1 class="text-2xl font-bold text-blue-600 mb-4 text-center">Danh sách vé đã đặt</h1>
-    <?php if (mysqli_num_rows($result) == 0): ?>
-        <div class="text-center text-gray-500 py-8">Bạn chưa đặt vé nào.</div>
-    <?php else: ?>
-        <table class="w-full table-auto border border-gray-200 text-center">
-            <thead class="bg-blue-200 text-blue-900 text-sm">
-                <tr>
-                    <th class="px-4 py-2 border">Mã chuyến</th>
-                    <th class="px-4 py-2 border">Nhà xe</th>
-                    <th class="px-4 py-2 border">Tuyến đường</th>
-                    <th class="px-4 py-2 border">Lịch trình</th>
-                    <th class="px-4 py-2 border">Ngày đặt</th>
-                    <th class="px-4 py-2 border">Ghế</th>
-                    <th class="px-4 py-2 border">Tổng tiền</th>
+
+<?php if (mysqli_num_rows($result) == 0): ?>
+    <div class="text-center text-gray-500 py-8">Bạn chưa đặt vé nào.</div>
+<?php else: ?>
+    <div class="overflow-x-auto">
+        <table class="w-full table-fixed border border-gray-200 shadow-md rounded-xl overflow-hidden text-sm">
+            <thead class="bg-gradient-to-r from-blue-200 to-blue-400 text-blue-900">
+                <tr class="text-center">
+                    <th class="w-1/6 px-4 py-2 border-b font-bold">Nhà xe</th>
+                    <th class="w-1/6 px-4 py-2 border-b font-bold">Tuyến đường</th>
+                    <th class="w-1/6 px-4 py-2 border-b font-bold">Lịch trình</th>
+                    <th class="w-1/6 px-4 py-2 border-b font-bold">Ngày đi</th>
+                    <th class="w-1/4 px-4 py-2 border-b font-bold">Ghế</th>
+                    <th class="w-1/6 px-4 py-2 border-b font-bold">Tổng tiền</th>
+                    <th class="w-1/6 px-4 py-2 border-b font-bold">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <tr class="hover:bg-blue-50 transition">
-                    <td class="border px-2 py-1"><?= htmlspecialchars($row['id_cd']) ?></td>
-                    <td class="border px-2 py-1"><?= htmlspecialchars($row['tenNX']) ?></td>
-                    <td class="border px-2 py-1"><?= htmlspecialchars($row['tuyenDuong']) ?></td>
-                    <td class="border px-2 py-1"><?= htmlspecialchars($row['lichTrinh']) ?></td>
-                    <td class="border px-2 py-1"><?= htmlspecialchars($row['ngayDat']) ?></td>
-                    <td class="border px-2 py-1"><?= htmlspecialchars($row['ghe']) ?></td>
-                    <td class="border px-2 py-1 text-right"><?= number_format($row['tongGia']) ?> đ</td>
+                <tr class="hover:bg-blue-50 text-center align-middle">
+                    <td class="px-4 py-2 text-gray-800"><?= htmlspecialchars($row['tenNX']) ?></td>
+                    <td class="px-4 py-2 text-gray-800"><?= htmlspecialchars($row['tuyenDuong']) ?></td>
+                    <td class="px-4 py-2 text-gray-800"><?= htmlspecialchars($row['lichTrinh']) ?></td>
+                    <td class="px-4 py-2 text-gray-800"><?= htmlspecialchars($row['ngayDi']) ?></td>
+                    <td class="px-4 py-2 text-blue-700 font-semibold break-words"><?= htmlspecialchars($row['ghe']) ?></td>
+                    <td class="px-4 py-2 text-green-600 font-bold"><?= number_format($row['tongGia']) ?>đ</td>
+                    <td class="px-4 py-2">
+                        <?php if ($row['trangthai'] == 'Da thanh toan'): ?>
+                            <form method="POST" action="huyve.php" onsubmit="return confirm('Bạn có chắc chắn muốn hủy vé này?');">
+                                <input type="hidden" name="id_ve" value="<?= $row['id_ve'] ?>">
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow text-sm">
+                                    Hủy vé
+                                </button>
+                            </form>
+                        <?php elseif ($row['trangthai'] == 'Huy'): ?>
+                            <span class="bg-yellow-400 text-white px-3 py-1 rounded shadow text-sm">
+                                Chờ hoàn tiền
+                            </span>
+                        <?php elseif ($row['trangthai'] == 'Da hoan tien'): ?>
+                            <span class="bg-green-500 text-white px-3 py-1 rounded shadow text-sm">
+                                Đã hoàn tiền
+                            </span>
+                        <?php endif; ?>
+                    </td>
                 </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
-    <?php endif; ?>
-    <div class="mt-6 text-center">
-        <a href="trangchu.php" class="inline-block bg-blue-600 text-white font-semibold px-6 py-2 rounded-xl shadow hover:bg-blue-700 transition">
-            Quay lại trang chủ
-        </a>
     </div>
+<?php endif; ?>
+
+<div class="mt-8 flex justify-center">
+    <a href="trangchu.php" class="bg-blue-600 text-white font-semibold px-6 py-2 rounded-xl shadow hover:bg-blue-700 transition">
+        Quay lại trang chủ
+    </a>
 </div>
+
+</div>
+</div>
+  <!-- Footer -->
+<footer class="bg-gray-800 text-white py-6 mt-10">
+    <div class="max-w-6xl mx-auto px-4 text-center text-sm">
+        © 2025 XeKhach365. All rights reserved.
+    </div>
+</footer>
+<script>
+function toggleDropdown() {
+    const menu = document.getElementById('dropdownMenu');
+    menu.classList.toggle('hidden');
+}
+document.addEventListener('click', function(event) {
+    const avatarBtn = document.getElementById('avatarBtn');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    if (avatarBtn && dropdownMenu && !avatarBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.add('hidden');
+    }
+});
+</script>
 </body>
 </html>

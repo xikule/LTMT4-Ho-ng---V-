@@ -55,6 +55,7 @@
             Điểm khởi hành: <input type="text" class="w-full border p-2 rounded" name="diemKH" value="<?php echo $se_cd['diemKH']?>">
             Điểm kết thúc: <input type="text" class="w-full border p-2 rounded" name="diemKT" value="<?php echo $se_cd['diemKT']?>">
             Giờ khởi hành: <input type="time" class="w-full border p-2 rounded" name="lichTrinh" value="<?php echo $se_cd['lichTrinh']?>">
+            Ngày đi: <input type="date" class="w-full border p-2 rounded" name="ngayDi" value="<?php echo $se_cd['ngayDi']?>">
             Giá: <input type="text" class="w-full border p-2 rounded" name="gia" value="<?php echo $se_cd['gia']?>">
             <input type="submit" class="bg-blue-600 text-white px-4 py-2 rounded" name="submit" value="Cập nhật">
             <?php
@@ -64,6 +65,7 @@
                                                         $_POST['diemKH'],
                                                         $_POST['diemKT'],
                                                      $_POST['lichTrinh'],
+                                                     $_POST['ngayDi'],
                                                             $_POST['gia'],
                                                         $_GET['update']);
                     if($update) header('location:qlchuyendi.php');

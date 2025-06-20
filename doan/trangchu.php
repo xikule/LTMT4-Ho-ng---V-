@@ -1,60 +1,43 @@
 <?php
 session_start();
-ob_start();
 include "user.php";
 include "connect.php";
 
-// Xử lý đăng nhập
-$text_error = '';
-if (isset($_POST['login'])) {
-    $user = $_POST['userdn'] ?? '';
-    $pass = $_POST['passdn'] ?? '';
-    $sql = "SELECT * FROM testing WHERE user = '$user' LIMIT 1";
-    $result = mysqli_query($conn, $sql);
-    if ($row = mysqli_fetch_assoc($result)) {
-        if ($row['pass'] == $pass) {
-            $_SESSION['id'] = $row['id'];
-            $_SESSION['user'] = $row['user'];
-            $_SESSION['role'] = $row['role'] ?? 0;
-            echo "<script>alert('Đăng nhập thành công!'); window.location='trangchu.php';</script>";
-            exit;
-        } else {
-            $text_error = "Sai mật khẩu!";
-        }
-    } else {
-        $text_error = "Tên đăng nhập không tồn tại!";
-    }
-}
-
-// Xử lý đăng ký
-if (isset($_POST['register'])) {
-    $user = $_POST['user'];
-    $email = $_POST['email'];
-    $pass = $_POST['pass'];
-    $get_data = new data_user();
-    $insert = $get_data->register($user, $email, $pass);
-    if ($insert) {
-        echo "<script>alert('Đăng ký thành công!');window.location='trangchu.php';</script>";
-        exit;
-    } else {
-        echo "<script>alert('Đăng ký không thành công!')</script>";
-    }
-}
-
-// Xử lý đăng xuất
-if (isset($_POST['logout'])) {
-    session_destroy();
-    header("Location:trangchu.php");
-    exit();
-}
-
-// Xử lý tìm kiếm chuyến xe
+// Lấy dữ liệu tìm kiếm từ form
 $diemKH = $_GET['diemKH'] ?? '';
 $diemKT = $_GET['diemKT'] ?? '';
 $lichTrinh = $_GET['lichTrinh'] ?? '';
-$get_data = new data_chuyendi();
-$result = $get_data->search_chuyendi($diemKH, $diemKT, $lichTrinh);
+$ngayDi = $_GET['ngayDi'] ?? '';
+
+// Phân trang
+$page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$limit = 8;
+$offset = ($page - 1) * $limit;
+
+// Đếm tổng số chuyến phù hợp
+$sql_count = "SELECT COUNT(*) as total FROM chuyendi WHERE 1";
+if ($diemKH) $sql_count .= " AND diemKH LIKE '%$diemKH%'";
+if ($diemKT) $sql_count .= " AND diemKT LIKE '%$diemKT%'";
+if ($lichTrinh) $sql_count .= " AND lichTrinh = '$lichTrinh'";
+if ($ngayDi) $sql_count .= " AND ngayDi = '$ngayDi'";
+$count_result = mysqli_query($conn, $sql_count);
+$total = mysqli_fetch_assoc($count_result)['total'];
+$total_pages = ceil($total / $limit);
+
+// Lấy danh sách chuyến xe
+$sql = "SELECT chuyendi.id_cd, nha_xe.tenNX, chuyendi.diemKH, chuyendi.diemKT, chuyendi.lichTrinh, chuyendi.gia, chuyendi.ngayDi
+        FROM chuyendi
+        JOIN nha_xe ON chuyendi.id_NX = nha_xe.id_NX
+        WHERE 1";
+if ($diemKH) $sql .= " AND chuyendi.diemKH LIKE '%$diemKH%'";
+if ($diemKT) $sql .= " AND chuyendi.diemKT LIKE '%$diemKT%'";
+if ($lichTrinh) $sql .= " AND chuyendi.lichTrinh = '$lichTrinh'";
+if ($ngayDi) $sql .= " AND chuyendi.ngayDi = '$ngayDi'";
+$sql .= " LIMIT $limit OFFSET $offset";
+$result = mysqli_query($conn, $sql);
+
 $chuyenXeList = [];
+
 if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $chuyenXeList[] = [
@@ -63,11 +46,12 @@ if ($result && mysqli_num_rows($result) > 0) {
             'diemKH' => $row['diemKH'],
             'diemKT' => $row['diemKT'],
             'lichTrinh' => $row['lichTrinh'],
-            'gia' => $row['gia']
+            'gia' => $row['gia'],
+            'ngayDi' => $row['ngayDi']
         ];
     }
 }
-ob_end_flush();
+
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -78,7 +62,6 @@ ob_end_flush();
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans">
-
 <!-- Navbar -->
 <nav class="bg-white shadow-md py-4">
     <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
@@ -116,140 +99,114 @@ ob_end_flush();
                             </svg>
                             <span>Xem vé đã đặt</span>
                         </a>
-                        <form method="post" action="">
-                            <button type="submit" name="logout" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Đăng xuất</button>
-                        </form>
+                        <a href="logout.php?redirect=<?= urlencode($_SERVER['REQUEST_URI']) ?>" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Đăng xuất</a>
                     </div>
                 </div>
             <?php else: ?>
-                <button onclick="openModal()" class="bg-blue-600 text-white px-4 py-1 rounded-xl hover:bg-blue-700 transition">Đăng nhập</button>
+                <a href="login.php?redirect=<?= urlencode($_SERVER['REQUEST_URI']) ?>" class="bg-blue-600 text-white px-4 py-1 rounded-xl hover:bg-blue-700 transition">Đăng nhập</a>
             <?php endif; ?>
         </div>
     </div>
 </nav>
-
 <!-- Hero section -->
 <section class="bg-blue-600 text-white py-20 text-center">
     <h2 class="text-4xl font-bold mb-4">Đặt vé xe khách dễ dàng và nhanh chóng</h2>
     <p class="mb-6">Tìm chuyến xe phù hợp, so sánh giá và đặt vé chỉ trong vài phút.</p>
     <!-- Form tìm kiếm chuyến xe -->
-    <form class="bg-white rounded-xl p-4 shadow-md max-w-2xl mx-auto text-gray-700 grid grid-cols-1 md:grid-cols-3 gap-4" method="get" action="">
+    <form class="bg-white rounded-xl p-4 shadow-md max-w-2xl mx-auto text-gray-700 grid grid-cols-1 md:grid-cols-4 gap-4" method="get" action="">
         <input type="text" name="diemKH" placeholder="Điểm đi" class="p-2 rounded-lg border border-gray-300" value="<?= htmlspecialchars($diemKH) ?>" />
         <input type="text" name="diemKT" placeholder="Điểm đến" class="p-2 rounded-lg border border-gray-300" value="<?= htmlspecialchars($diemKT) ?>" />
-        <input type="date" name="lichTrinh" class="p-2 rounded-lg border border-gray-300" value="<?= htmlspecialchars($lichTrinh) ?>" />
-        <div class="md:col-span-3 text-center">
+        <input type="time" name="lichTrinh" placeholder="Lịch trình" class="p-2 rounded-lg border border-gray-300" value="<?= htmlspecialchars($lichTrinh) ?>" />
+        <input type="text" name="ngayDi" placeholder="yy/dd/mm" class="p-2 rounded-lg border border-gray-300" value="<?= htmlspecialchars($ngayDi) ?>" />
+        <div class="md:col-span-4 text-center">
             <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700">Tìm chuyến xe</button>
         </div>
     </form>
 </section>
-
 <!-- Kết quả tìm kiếm chuyến xe -->
-<div class="max-w-4xl mx-auto mt-8 bg-white rounded-2xl shadow-xl p-6 border-2 border-blue-400">
-    <?php if (empty($chuyenXeList)): ?>
-        <div class="bg-yellow-100 border border-yellow-400 rounded p-4 text-blue-800 text-center">
-            Không tìm thấy kết quả chuyến xe phù hợp.
+<div class="flex justify-center mt-8">
+    <div class="w-full max-w-6xl bg-white rounded-2xl shadow-xl p-6 border-2 border-blue-400">
+        <!-- Thông tin tìm kiếm -->
+        <?php if ($diemKH || $diemKT || $lichTrinh || $ngayDi): ?>
+        <div class="mb-6 flex justify-center">
+            <div class="bg-blue-100 border border-blue-300 rounded-xl px-6 py-3 text-blue-800 text-lg font-semibold flex items-center gap-2 shadow">
+                Đã tìm thấy <span class="font-bold text-blue-700 text-xl"><?= $total ?></span> chuyến xe phù hợp
+            </div>
         </div>
-    <?php else: ?>
-        <h3 class="text-2xl font-bold mb-6 text-blue-700 text-center">Kết quả tìm kiếm chuyến xe (<?= count($chuyenXeList) ?> chuyến)</h3>
-        <div class="overflow-x-auto rounded-lg">
-            <table class="w-full table-auto border border-gray-200 shadow-sm">
-                <thead class="bg-gradient-to-r from-blue-200 to-blue-400 text-blue-900 text-base">
-                    <tr>
-                        <th class="px-6 py-3 border-b-2 border-blue-300">Nhà xe</th>
-                        <th class="px-6 py-3 border-b-2 border-blue-300">Điểm đi</th>
-                        <th class="px-6 py-3 border-b-2 border-blue-300">Điểm đến</th>
-                        <th class="px-6 py-3 border-b-2 border-blue-300">Lịch trình</th>
-                        <th class="px-6 py-3 border-b-2 border-blue-300">Giá vé</th>
-                        <th class="px-6 py-3 border-b-2 border-blue-300"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach($chuyenXeList as $se_chuyenXeList): ?>
-                        <tr class="hover:bg-blue-50 transition border-b border-blue-100 text-center">
-                            <td class="p-3 font-semibold text-blue-700"><?= htmlspecialchars($se_chuyenXeList['tenNX']) ?></td>
-                            <td class="p-3"><?= htmlspecialchars($se_chuyenXeList['diemKH']) ?></td>
-                            <td class="p-3"><?= htmlspecialchars($se_chuyenXeList['diemKT']) ?></td>
-                            <td class="p-3"><?= htmlspecialchars($se_chuyenXeList['lichTrinh']) ?></td>
-                            <td class="p-3 text-right font-bold text-green-600"><?= number_format($se_chuyenXeList['gia']) ?> đ</td>
-                            <td class="p-3 text-center">
-                                <form action="chitietve.php" method="POST">
+        <?php endif; ?>
+        <table class="w-full table-auto border border-gray-200 shadow-sm">
+            <thead class="bg-gradient-to-r from-blue-200 to-blue-400 text-blue-900 text-base">
+                <tr class="text-center">
+                    <th class="px-6 py-3 border-b-2 border-blue-300 font-bold text-lg">Nhà xe</th>
+                    <th class="px-6 py-3 border-b-2 border-blue-300 font-bold text-lg">Điểm đi</th>
+                    <th class="px-6 py-3 border-b-2 border-blue-300 font-bold text-lg">Điểm đến</th>
+                    <th class="px-6 py-3 border-b-2 border-blue-300 font-bold text-lg">Lịch trình</th>
+                    <th class="px-6 py-3 border-b-2 border-blue-300 font-bold text-lg">Ngày đi</th>
+                    <th class="px-6 py-3 border-b-2 border-blue-300 font-bold text-lg">Giá vé</th>
+                    <th class="px-6 py-3 border-b-2 border-blue-300 font-bold text-lg">Số ghế còn</th>
+                    <th class="px-6 py-3 border-b-2 border-blue-300"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($chuyenXeList as $se_chuyenXeList): ?>
+                    <?php
+                        $id_cd = $se_chuyenXeList['id_cd'];
+                        $ngayDi = $se_chuyenXeList['ngayDi'];
+                        $sql_ghe = "SELECT ghe FROM ve WHERE id_cd = '$id_cd' AND ngayDi = '$ngayDi'";
+                        $result_ghe = mysqli_query($conn, $sql_ghe);
+                        $sold_seats = 0;
+                        while ($row_ghe = mysqli_fetch_assoc($result_ghe)) {
+                            $arr = explode(',', $row_ghe['ghe']);
+                            foreach ($arr as $ghe) {
+                                if (trim($ghe) !== '') $sold_seats++;
+                            }
+                        }
+                        $total_seats = 32;
+                        $available_seats = $total_seats - $sold_seats;
+                    ?>
+                    <tr class="hover:bg-blue-50 transition border-b border-blue-100 text-center align-middle">
+                        <td class="p-4 font-semibold text-blue-700 text-lg align-middle"><?= htmlspecialchars($se_chuyenXeList['tenNX']) ?></td>
+                        <td class="p-4 text-gray-800 align-middle"><?= htmlspecialchars($se_chuyenXeList['diemKH']) ?></td>
+                        <td class="p-4 text-gray-800 align-middle"><?= htmlspecialchars($se_chuyenXeList['diemKT']) ?></td>
+                        <td class="p-4 text-gray-800 align-middle"><?= htmlspecialchars($se_chuyenXeList['lichTrinh']) ?></td>
+                        <td class="p-4 text-gray-800 align-middle"><?= htmlspecialchars($se_chuyenXeList['ngayDi']) ?></td>
+                        <td class="p-4 text-right font-bold text-green-600 text-lg align-middle"><?= number_format($se_chuyenXeList['gia']) ?>đ</td>
+                        <td class="p-4 text-blue-700 font-bold text-lg align-middle"><?= $available_seats ?> ghế</td>
+                        <td class="p-4 text-center align-middle">
+                            <?php if ($available_seats > 0): ?>
+                                <form action="chitietve.php" method="GET">
                                     <input type="hidden" name="id_cd" value="<?= $se_chuyenXeList['id_cd'] ?>">
-                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition font-semibold">Chọn</button>
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition font-semibold whitespace-nowrap">
+                                        Đặt vé
+                                    </button>
                                 </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                            <?php else: ?>
+                                <button class="bg-gray-400 text-white px-4 py-2 rounded-lg shadow font-semibold cursor-not-allowed opacity-70" disabled>
+                                    Hết vé
+                                </button>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <!-- PHÂN TRANG -->
+        <div class="flex justify-center mt-4 space-x-2">
+            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                <a href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"
+                class="px-3 py-1 rounded <?= $i == $page ? 'bg-blue-600 text-white' : 'bg-gray-200 text-blue-700' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
         </div>
-        <!-- Thanh tính năng -->
-        <div class="w-full flex flex-col md:flex-row justify-between items-center gap-4 text-sm px-4 py-4 mt-6 rounded-xl bg-gray-100 border border-gray-200">
-            <div class="flex items-center gap-2">
-                <span class="text-green-600 text-xl">✔</span>
-                <span class="text-gray-700 font-medium">Chắc chắn có chỗ</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="text-yellow-600 text-xl">★</span>
-                <span class="text-gray-700 font-medium">Nhiều ưu đãi</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="text-blue-600 text-xl">💳</span>
-                <span class="text-gray-700 font-medium">Thanh toán đa dạng</span>
-            </div>
-        </div>
-    <?php endif; ?>
-</div>
-
-<!-- Modal Đăng nhập/Đăng ký -->
-<div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
-        <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-xl">&times;</button>
-        <div class="flex justify-center mb-6">
-            <button id="loginTab" onclick="showTab('login')" class="px-4 py-2 font-semibold text-blue-600 border-b-2 border-blue-600">Đăng nhập</button>
-            <button id="registerTab" onclick="showTab('register')" class="px-4 py-2 font-semibold text-gray-500 border-b-2 border-transparent hover:text-blue-600">Đăng ký</button>
-        </div>
-        <!-- Đăng nhập -->
-        <form id="loginForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-            <div class="mb-4">
-                <label class="block mb-1 font-medium">Username</label>
-                <input type="text" class="text-black w-full p-2 border border-gray-300 rounded-xl" name="userdn" placeholder="Tên đăng nhập" required />
-            </div>
-            <div class="mb-4">
-                <label class="block mb-1 font-medium">Mật khẩu</label>
-                <input type="password" class="text-black w-full p-2 border border-gray-300 rounded-xl" name="passdn" placeholder="********" required />
-            </div>
-            <input type="submit" class="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700" name="login" value="Đăng nhập"/>
-            <?php if (!empty($text_error)) { ?>
-                <p class="text-red-500 mt-2"><?php echo $text_error; ?></p>
-            <?php } ?>
-        </form>
-        <!-- Đăng ký -->
-        <form id="registerForm" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <div class="mb-4">
-                <label class="block mb-1 font-medium">Họ và tên</label>
-                <input type="text" class="text-black w-full p-2 border border-gray-300 rounded-xl" name="user" placeholder="Nhập họ tên" required />
-            </div>
-            <div class="mb-4">
-                <label class="block mb-1 font-medium">Email</label>
-                <input type="email" class="text-black w-full p-2 border border-gray-300 rounded-xl" name="email" placeholder="hovaten@gmail.com" required />
-            </div>
-            <div class="mb-4">
-                <label class="block mb-1 font-medium">Mật khẩu</label>
-                <input type="password" class="text-black w-full p-2 border border-gray-300 rounded-xl" name="pass" placeholder="********" required />
-            </div>
-            <input type="submit" class="w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700" name="register" value="Đăng ký" />
-        </form>
     </div>
 </div>
-
 <!-- Footer -->
 <footer class="bg-gray-800 text-white py-6 mt-10">
     <div class="max-w-6xl mx-auto px-4 text-center text-sm">
         © 2025 XeKhach365. All rights reserved.
     </div>
 </footer>
-
-<!-- JavaScript: Open/Close Modal & Dropdown -->
 <script>
 function toggleDropdown() {
     const menu = document.getElementById('dropdownMenu');
@@ -262,38 +219,6 @@ document.addEventListener('click', function(event) {
         dropdownMenu.classList.add('hidden');
     }
 });
-function openModal() {
-    document.getElementById('authModal').classList.remove('hidden');
-    showTab('login');
-}
-function closeModal() {
-    document.getElementById('authModal').classList.add('hidden');
-}
-function showTab(tab) {
-    const loginTab = document.getElementById('loginTab');
-    const registerTab = document.getElementById('registerTab');
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    if (tab === 'login') {
-        loginForm.classList.remove('hidden');
-        registerForm.classList.add('hidden');
-        loginTab.classList.add('text-blue-600', 'border-blue-600');
-        registerTab.classList.remove('text-blue-600', 'border-blue-600');
-        registerTab.classList.add('text-gray-500');
-    } else {
-        loginForm.classList.add('hidden');
-        registerForm.classList.remove('hidden');
-        loginTab.classList.remove('text-blue-600', 'border-blue-600');
-        loginTab.classList.add('text-gray-500');
-        registerTab.classList.add('text-blue-600', 'border-blue-600');
-    }
-}
-// Hiện lại modal đăng nhập nếu đăng nhập sai
-window.onload = function() {
-    <?php if (!empty($text_error)): ?>
-        openModal();
-    <?php endif; ?>
-};
 </script>
 </body>
 </html>
