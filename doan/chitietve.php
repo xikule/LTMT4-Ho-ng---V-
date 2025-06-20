@@ -129,12 +129,45 @@ if (isset($_POST['thanhtoan'])) {
         <div>
             <span class="font-semibold">Chọn ghế</span>
             <div id="seat-selection">
-                <?php for ($i = 1; $i <= 16; $i++): ?>
-                    <?php $unavailable = ($i == 1); ?>
-                    <div class="seat <?= $unavailable ? 'unavailable' : '' ?>" data-seat-number="<?= $i ?>">
-                        <?= $i ?>
+            <div style="display: flex; gap: 40px; justify-content: center; margin-left: 60px;">
+                <!-- Bên trái -->
+                <div>
+                    <div style="display: flex; gap: 6px;">
+                        <!-- Cột 1 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <?php for ($i = 1; $i <= 8; $i++): ?>
+                                <?php $unavailable = ($i == 1); ?>
+                                <div class="seat <?= $unavailable ? 'unavailable' : '' ?>" data-seat-number="<?= $i ?>">
+                                    <?= $i ?>
+                                </div>
+                            <?php endfor; ?>
+                        </div>
+                        <!-- Cột 2 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <?php for ($i = 9; $i <= 16; $i++): ?>
+                                <div class="seat" data-seat-number="<?= $i ?>"><?= $i ?></div>
+                            <?php endfor; ?>
+                        </div>
                     </div>
-                <?php endfor; ?>
+                </div>
+                <!-- Bên phải -->
+                <div>
+                    <div style="display: flex; gap: 6px;">
+                        <!-- Cột 3 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <?php for ($i = 17; $i <= 24; $i++): ?>
+                                <div class="seat" data-seat-number="<?= $i ?>"><?= $i ?></div>
+                            <?php endfor; ?>
+                        </div>
+                        <!-- Cột 4 -->
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <?php for ($i = 25; $i <= 32; $i++): ?>
+                                <div class="seat" data-seat-number="<?= $i ?>"><?= $i ?></div>
+                            <?php endfor; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
             <p class="block font-semibold">Ghế đã chọn: <span id="selected-seats">Chưa chọn ghế</span></p>
         </div>
