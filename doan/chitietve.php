@@ -159,66 +159,6 @@ if (isset($_POST['logout'])) {
     <h1 class="text-2xl font-bold text-blue-600 mb-4">Chi tiết vé xe</h1>
     <?php foreach($se_chuyenXeList as $chuyenXeList): ?>
     <form method="POST" id="payment-form">
-<<<<<<< HEAD
-        <div>
-            <span class="font-semibold">Mã chuyến đi:</span> <?= $chuyenXeList['id_cd'] ?>
-        </div>
-        <div>
-            <span class="font-semibold">Họ tên:</span> <?= htmlspecialchars($user) ?>
-        </div>
-        <div>
-            <span class="font-semibold">Tuyến đường:</span> <?= $chuyenXeList['diemKH'] ?> - <?= $chuyenXeList['diemKT'] ?>
-        </div>
-        <div>
-            <span class="font-semibold">Thời gian khởi hành:</span> <?= $chuyenXeList['lichTrinh'] ?>
-        </div>
-        <div>
-            <span class="font-semibold">Chọn ngày đi:</span>
-            <input type="date" name="ngayDat" required>
-        </div>
-        <div>
-            <span class="font-semibold">Chọn ghế</span>
-            <div id="seat-selection">
-            <div style="display: flex; gap: 40px; justify-content: center; margin-left: 60px;">
-                <!-- Bên trái -->
-                <div>
-                    <div style="display: flex; gap: 6px;">
-                        <!-- Cột 1 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <?php for ($i = 1; $i <= 8; $i++): ?>
-                                <?php $unavailable = ($i == 1); ?>
-                                <div class="seat <?= $unavailable ? 'unavailable' : '' ?>" data-seat-number="<?= $i ?>">
-                                    <?= $i ?>
-                                </div>
-                            <?php endfor; ?>
-                        </div>
-                        <!-- Cột 2 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <?php for ($i = 9; $i <= 16; $i++): ?>
-                                <div class="seat" data-seat-number="<?= $i ?>"><?= $i ?></div>
-                            <?php endfor; ?>
-                        </div>
-                    </div>
-                </div>
-                <!-- Bên phải -->
-                <div>
-                    <div style="display: flex; gap: 6px;">
-                        <!-- Cột 3 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <?php for ($i = 17; $i <= 24; $i++): ?>
-                                <div class="seat" data-seat-number="<?= $i ?>"><?= $i ?></div>
-                            <?php endfor; ?>
-                        </div>
-                        <!-- Cột 4 -->
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            <?php for ($i = 25; $i <= 32; $i++): ?>
-                                <div class="seat" data-seat-number="<?= $i ?>"><?= $i ?></div>
-                            <?php endfor; ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-=======
         <div class="flex flex-col md:flex-row gap-8">
             <!-- BÊN TRÁI: Thông tin chuyến và chọn ghế -->
             <div class="flex-1">
@@ -319,7 +259,6 @@ if (isset($_POST['logout'])) {
         <button type="button" class="bg-blue-600 text-white px-6 py-2 rounded">Đăng nhập để thanh toán</button>
     <?php endif; ?>
                 </div>
->>>>>>> df35fc3183830f3d5a39f7525f184ab80bf43875
             </div>
         </div>
     </form>
