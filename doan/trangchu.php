@@ -51,6 +51,23 @@ if ($result && mysqli_num_rows($result) > 0) {
         ];
     }
 }
+if(isset($_SESSION['user'])) {
+    $today = date('Y-m-d');
+    $user = mysqli_real_escape_string($conn, $_SESSION['user']);
+    $sql_lich = "SELECT ve.*, chuyendi.diemKH, chuyendi.diemKT FROM ve
+                 JOIN chuyendi ON ve.id_cd = chuyendi.id_cd
+                 JOIN user on ve.id = user.id
+                 WHERE user.user = '$user' AND ve.ngayDi >= '$today' AND ve.trangthai = 'Da thanh toan'";
+    $result_lich = mysqli_query($conn, $sql_lich);
+    if($result_lich && mysqli_num_rows($result_lich) > 0) {
+        echo '<div id="noti-alert" class="max-w-xl mx-auto my-4 bg-green-100 border border-green-400 text-green-800 rounded-xl px-6 py-4 flex items-center gap-3 shadow">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2l4-4m5 2a9 9 0 11-18 0a9 9 0 0118 0z" />
+    </svg>
+    <span class="font-semibold text-lg">Hôm nay bạn có chuyến xe đã đặt. Chúc bạn thượng lộ bình an!</span>
+</div>';
+        }
+    }
 
 ?>
 <!DOCTYPE html>
@@ -219,6 +236,10 @@ document.addEventListener('click', function(event) {
         dropdownMenu.classList.add('hidden');
     }
 });
+setTimeout(function() {
+    var noti = document.getElementById('noti-alert');
+    if(noti) noti.style.display = 'none';
+}, 3000); // 4000ms = 4 giây
 </script>
 </body>
 </html>
