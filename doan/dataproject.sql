@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 20, 2025 lúc 05:57 PM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Jul 01, 2025 at 09:15 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `dataproject`
+-- Database: `dataproject`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chuyendi`
+-- Table structure for table `chuyendi`
 --
 
 CREATE TABLE `chuyendi` (
@@ -34,53 +34,58 @@ CREATE TABLE `chuyendi` (
   `diemKT` varchar(100) NOT NULL,
   `lichTrinh` time NOT NULL,
   `ngayDi` date NOT NULL,
-  `gia` int(11) NOT NULL
+  `gia` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `chuyendi`
+-- Dumping data for table `chuyendi`
 --
 
 INSERT INTO `chuyendi` (`id_cd`, `id_NX`, `diemKH`, `diemKT`, `lichTrinh`, `ngayDi`, `gia`) VALUES
-(9, 9, 'Ha noi', 'Hai Phong', '07:30:00', '2025-03-07', 250000),
-(12, 9, 'Ha noi', 'Hai Phong', '07:30:00', '2025-04-07', 250000),
-(13, 9, 'Ha noi', 'Hai Phong', '07:30:00', '2025-05-07', 250000),
-(14, 9, 'Hai Phong', 'Ha Noi', '08:00:00', '2025-03-07', 250000),
-(15, 9, 'Hai Phong', 'Ha Noi', '08:00:00', '2025-04-07', 250000),
-(16, 9, 'Hai Phong', 'Ha Noi', '08:00:00', '2025-05-07', 250000),
-(17, 10, 'TP HCM', 'Da Lat', '09:00:00', '2025-03-07', 290000),
-(18, 10, 'TP HCM', 'Da Lat', '09:00:00', '2025-04-07', 290000),
-(19, 10, 'TP HCM', 'Da Lat', '09:00:00', '2025-05-07', 290000),
-(20, 10, 'Da Lat', 'TP HCM', '09:30:00', '2025-05-07', 290000),
-(21, 0, 'Da Lat', 'TP HCM', '09:30:00', '2025-04-07', 290000),
-(22, 0, 'Da Lat', 'TP HCM', '00:00:00', '2025-04-07', 290000),
-(23, 10, 'Da Lat', 'TP HCM', '00:00:00', '2025-05-07', 290000),
-(24, 11, 'Da Lat', 'TP HCM', '14:30:00', '2025-05-07', 280000),
-(25, 11, 'Da Lat', 'TP HCM', '14:30:00', '2025-06-07', 280000),
-(27, 11, 'Da Lat', 'Da Nang', '10:45:00', '2025-03-07', 420000),
-(28, 11, 'Da Lat', 'Da Nang', '10:45:00', '2025-05-07', 420000),
-(29, 11, 'Da Lat', 'Da Nang', '10:45:00', '2025-07-07', 420000),
-(30, 12, 'Hai Phong', 'Thanh Hoa', '08:00:00', '2025-04-07', 320000),
-(31, 12, 'Hai Phong', 'Thanh Hoa', '08:00:00', '2025-06-07', 320000),
-(32, 12, 'Hai Phong', 'Thanh Hoa', '08:00:00', '2025-08-07', 320000),
-(33, 12, 'Thanh Hoa', 'Hai Phong', '08:45:00', '2025-05-07', 310000),
-(34, 12, 'Thanh Hoa', 'Hai Phong', '10:00:00', '2025-05-07', 310000),
-(35, 13, 'Nghe An', 'Ha Noi', '06:00:00', '2025-07-07', 270000),
-(36, 13, 'Nghe An', 'Ha Noi', '06:00:00', '2025-08-07', 270000),
-(37, 13, 'Nghe An', 'Ha Noi', '06:00:00', '2025-09-07', 270000),
-(38, 13, 'Ha Noi', 'Nghe An', '05:30:00', '2025-08-07', 270000),
-(39, 13, 'Ha Noi', 'Nghe An', '05:30:00', '2025-07-07', 270000),
-(40, 13, 'Ha Noi', 'Nghe An', '06:30:00', '2025-10-07', 270000),
-(41, 14, 'Ha Noi', 'Sapa', '04:00:00', '2025-04-07', 340000),
-(42, 14, 'Ha Noi', 'Sapa', '06:00:00', '2025-04-07', 340000),
-(43, 14, 'Ha Noi', 'Sapa', '08:00:00', '2025-04-07', 340000),
-(44, 14, 'Sapa', 'Ha Noi', '08:00:00', '2025-05-07', 340000),
-(45, 14, 'Sapa', 'Ha Noi', '10:00:00', '2025-05-07', 340000);
+(9, 9, 'Ha noi', 'Hai Phong', '07:30:00', '2025-03-07', '250.000'),
+(12, 9, 'Ha noi', 'Hai Phong', '07:30:00', '2025-04-07', '250000'),
+(13, 9, 'Ha noi', 'Hai Phong', '07:30:00', '2025-05-07', '250000'),
+(14, 9, 'Hai Phong', 'Ha Noi', '08:00:00', '2025-03-07', '250000'),
+(15, 9, 'Hai Phong', 'Ha Noi', '08:00:00', '2025-04-07', '250000'),
+(16, 9, 'Hai Phong', 'Ha Noi', '08:00:00', '2025-05-07', '250000'),
+(17, 10, 'TP HCM', 'Da Lat', '09:00:00', '2025-03-07', '290000'),
+(18, 10, 'TP HCM', 'Da Lat', '09:00:00', '2025-04-07', '290000'),
+(19, 10, 'TP HCM', 'Da Lat', '09:00:00', '2025-05-07', '290000'),
+(20, 10, 'Da Lat', 'TP HCM', '09:30:00', '2025-05-07', '290000'),
+(21, 0, 'Da Lat', 'TP HCM', '09:30:00', '2025-04-07', '290000'),
+(22, 0, 'Da Lat', 'TP HCM', '00:00:00', '2025-04-07', '290000'),
+(23, 10, 'Da Lat', 'TP HCM', '00:00:00', '2025-05-07', '290000'),
+(24, 11, 'Da Lat', 'TP HCM', '14:30:00', '2025-05-07', '280000'),
+(25, 11, 'Da Lat', 'TP HCM', '14:30:00', '2025-06-07', '280000'),
+(27, 11, 'Da Lat', 'Da Nang', '10:45:00', '2025-03-07', '420000'),
+(28, 11, 'Da Lat', 'Da Nang', '10:45:00', '2025-05-07', '420000'),
+(29, 11, 'Da Lat', 'Da Nang', '10:45:00', '2025-07-07', '420000'),
+(30, 12, 'Hai Phong', 'Thanh Hoa', '08:00:00', '2025-04-07', '320000'),
+(31, 12, 'Hai Phong', 'Thanh Hoa', '08:00:00', '2025-06-07', '320000'),
+(32, 12, 'Hai Phong', 'Thanh Hoa', '08:00:00', '2025-08-07', '320000'),
+(33, 12, 'Thanh Hoa', 'Hai Phong', '08:45:00', '2025-05-07', '310000'),
+(34, 12, 'Thanh Hoa', 'Hai Phong', '10:00:00', '2025-05-07', '310000'),
+(35, 13, 'Nghe An', 'Ha Noi', '06:00:00', '2025-07-07', '270000'),
+(36, 13, 'Nghe An', 'Ha Noi', '06:00:00', '2025-08-07', '270000'),
+(37, 13, 'Nghe An', 'Ha Noi', '06:00:00', '2025-09-07', '270000'),
+(38, 13, 'Ha Noi', 'Nghe An', '05:30:00', '2025-08-07', '270000'),
+(39, 13, 'Ha Noi', 'Nghe An', '05:30:00', '2025-07-07', '270000'),
+(40, 13, 'Ha Noi', 'Nghe An', '06:30:00', '2025-10-07', '270000'),
+(41, 14, 'Ha Noi', 'Sapa', '04:00:00', '2025-04-07', '340000'),
+(42, 14, 'Ha Noi', 'Sapa', '06:00:00', '2025-04-07', '340000'),
+(43, 14, 'Ha Noi', 'Sapa', '08:00:00', '2025-04-07', '340000'),
+(44, 14, 'Sapa', 'Ha Noi', '08:00:00', '2025-05-07', '340000'),
+(46, 0, '', '', '00:00:00', '0000-00-00', '0'),
+(47, 0, '', '', '00:00:00', '0000-00-00', '0'),
+(48, 0, '', '', '00:00:00', '0000-00-00', '0'),
+(49, 0, '', '', '00:00:00', '0000-00-00', '0'),
+(50, 0, '', '', '00:00:00', '0000-00-00', '0'),
+(51, 9, 'hà nội', 'thanh hóa', '13:31:00', '2025-07-01', '300000');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `nha_xe`
+-- Table structure for table `nha_xe`
 --
 
 CREATE TABLE `nha_xe` (
@@ -90,7 +95,7 @@ CREATE TABLE `nha_xe` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `nha_xe`
+-- Dumping data for table `nha_xe`
 --
 
 INSERT INTO `nha_xe` (`id_NX`, `tenNX`, `soDT`) VALUES
@@ -99,12 +104,13 @@ INSERT INTO `nha_xe` (`id_NX`, `tenNX`, `soDT`) VALUES
 (11, 'Mai Linh', '0977777777'),
 (12, 'Văn Minh', '0966666666'),
 (13, 'An Phú Quý', '0955555555'),
-(14, 'Phong Phú', '0944444444');
+(14, 'Phong Phú', '0944444444'),
+(15, '', '');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -116,18 +122,19 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `user`, `email`, `pass`, `role`) VALUES
 (1, 'admin', NULL, 1, 1),
 (3, 'admin3', 'nn7504791@gmail.com', 1234, 0),
-(6, 'lexuanvu', 'd2@gmail.com', 1, 0);
+(6, 'lexuanvu', 'd2@gmail.com', 1, 0),
+(7, 'hoangvanvu', 'kimminhhoang058@gmail.com', 111111, 0);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `ve`
+-- Table structure for table `ve`
 --
 
 CREATE TABLE `ve` (
@@ -143,23 +150,30 @@ CREATE TABLE `ve` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `ve`
+-- Dumping data for table `ve`
 --
 
 INSERT INTO `ve` (`id_ve`, `id_cd`, `id`, `tuyenDuong`, `lichTrinh`, `ngayDi`, `ghe`, `tongGia`, `trangthai`) VALUES
-(48, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '11,15,19', '750000', 'Huy'),
+(48, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '11,15,19', '750000', 'Da hoan tien'),
 (49, 12, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-04-07', '16,14', '500000', 'Da hoan tien'),
 (53, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '8,12', '500000', 'Da thanh toan'),
-(55, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '13,9', '500000', 'Huy'),
+(55, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '13,9', '500000', 'Da hoan tien'),
 (56, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '6,10', '500000', 'Da thanh toan'),
 (57, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '3,7,16', '750000', 'Da thanh toan'),
 (58, 9, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '22,25', '500000', 'Da thanh toan'),
-(59, 13, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-05-07', '1,2,3,4,8,7,6,5,9,10,13,14,18,17,21,25,29,30,26,22,23,27,31,32,28,24,20,16,12,11,15,19', '5600000', 'Da thanh toan');
+(59, 13, 6, 'Ha noi - Hai Phong', '07:30:00', '2025-05-07', '1,2,3,4,8,7,6,5,9,10,13,14,18,17,21,25,29,30,26,22,23,27,31,32,28,24,20,16,12,11,15,19', '5600000', 'Da thanh toan'),
+(60, 17, 3, 'TP HCM - Da Lat', '09:00:00', '2025-03-07', '3', '261000', 'Da hoan tien'),
+(61, 9, 3, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '2', '225000', 'Da hoan tien'),
+(62, 9, 3, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '4', '250000', 'Da thanh toan'),
+(63, 14, 3, 'Hai Phong - Ha Noi', '08:00:00', '2025-03-07', '4', '250000', 'Da thanh toan'),
+(64, 9, 3, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '1', '250000', 'Da thanh toan'),
+(65, 51, 3, 'hà nội - thanh hóa', '13:31:00', '2025-07-01', '3', '300000', 'Da thanh toan'),
+(66, 9, 7, 'Ha noi - Hai Phong', '07:30:00', '2025-03-07', '5', '250000', 'Da thanh toan');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `voucher`
+-- Table structure for table `voucher`
 --
 
 CREATE TABLE `voucher` (
@@ -169,7 +183,7 @@ CREATE TABLE `voucher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `voucher`
+-- Dumping data for table `voucher`
 --
 
 INSERT INTO `voucher` (`id_voucher`, `code`, `discount_value`) VALUES
@@ -178,30 +192,30 @@ INSERT INTO `voucher` (`id_voucher`, `code`, `discount_value`) VALUES
 (6, 'giam30', '30');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `chuyendi`
+-- Indexes for table `chuyendi`
 --
 ALTER TABLE `chuyendi`
   ADD PRIMARY KEY (`id_cd`),
   ADD KEY `id_NX` (`id_NX`);
 
 --
--- Chỉ mục cho bảng `nha_xe`
+-- Indexes for table `nha_xe`
 --
 ALTER TABLE `nha_xe`
   ADD PRIMARY KEY (`id_NX`);
 
 --
--- Chỉ mục cho bảng `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `ve`
+-- Indexes for table `ve`
 --
 ALTER TABLE `ve`
   ADD PRIMARY KEY (`id_ve`),
@@ -209,51 +223,51 @@ ALTER TABLE `ve`
   ADD KEY `fk_ve_user` (`id`);
 
 --
--- Chỉ mục cho bảng `voucher`
+-- Indexes for table `voucher`
 --
 ALTER TABLE `voucher`
   ADD PRIMARY KEY (`id_voucher`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `chuyendi`
+-- AUTO_INCREMENT for table `chuyendi`
 --
 ALTER TABLE `chuyendi`
-  MODIFY `id_cd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id_cd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT cho bảng `nha_xe`
+-- AUTO_INCREMENT for table `nha_xe`
 --
 ALTER TABLE `nha_xe`
-  MODIFY `id_NX` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_NX` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT cho bảng `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT cho bảng `ve`
+-- AUTO_INCREMENT for table `ve`
 --
 ALTER TABLE `ve`
-  MODIFY `id_ve` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id_ve` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
--- AUTO_INCREMENT cho bảng `voucher`
+-- AUTO_INCREMENT for table `voucher`
 --
 ALTER TABLE `voucher`
   MODIFY `id_voucher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `ve`
+-- Constraints for table `ve`
 --
 ALTER TABLE `ve`
   ADD CONSTRAINT `fk_ve_testing` FOREIGN KEY (`id`) REFERENCES `user` (`id`),
