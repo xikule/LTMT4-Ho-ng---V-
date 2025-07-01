@@ -239,7 +239,7 @@ document.addEventListener('click', function(event) {
 setTimeout(function() {
     var noti = document.getElementById('noti-alert');
     if(noti) noti.style.display = 'none';
-}, 3000); // 4000ms = 4 giây
+}, 3000); // 3000ms = 3 giây
 </script>
 </body>
 </html>
