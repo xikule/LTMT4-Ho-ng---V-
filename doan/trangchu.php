@@ -4,6 +4,7 @@ include "user.php";
 include "connect.php";
 
 // Lấy dữ liệu tìm kiếm từ form
+$tenNX = $_GET['tenNX'] ?? '';
 $diemKH = $_GET['diemKH'] ?? '';
 $diemKT = $_GET['diemKT'] ?? '';
 $lichTrinh = $_GET['lichTrinh'] ?? '';
@@ -16,6 +17,8 @@ $offset = ($page - 1) * $limit;
 
 // Đếm tổng số chuyến phù hợp
 $sql_count = "SELECT COUNT(*) as total FROM chuyendi WHERE 1";
+$sql_count1 = "SELECT COUNT(*) as total FROM nha_xe WHERE 1";
+if ($tenNX) $sql_count1 .= " AND tenNX LIKE '%$tenNX%'";
 if ($diemKH) $sql_count .= " AND diemKH LIKE '%$diemKH%'";
 if ($diemKT) $sql_count .= " AND diemKT LIKE '%$diemKT%'";
 if ($lichTrinh) $sql_count .= " AND lichTrinh = '$lichTrinh'";
@@ -131,6 +134,7 @@ if(isset($_SESSION['user'])) {
     <p class="mb-6">Tìm chuyến xe phù hợp, so sánh giá và đặt vé chỉ trong vài phút.</p>
     <!-- Form tìm kiếm chuyến xe -->
     <form class="bg-white rounded-xl p-4 shadow-md max-w-2xl mx-auto text-gray-700 grid grid-cols-1 md:grid-cols-4 gap-4" method="get" action="">
+        <input type="text" name="tenNX" placeholder="Nhà xe" class="p-2 rounded-lg border border-gray-300" value="<?= htmlspecialchars($tenNX) ?>" />
         <input type="text" name="diemKH" placeholder="Điểm đi" class="p-2 rounded-lg border border-gray-300" value="<?= htmlspecialchars($diemKH) ?>" />
         <input type="text" name="diemKT" placeholder="Điểm đến" class="p-2 rounded-lg border border-gray-300" value="<?= htmlspecialchars($diemKT) ?>" />
         <input type="time" name="lichTrinh" placeholder="Lịch trình" class="p-2 rounded-lg border border-gray-300" value="<?= htmlspecialchars($lichTrinh) ?>" />
@@ -144,7 +148,7 @@ if(isset($_SESSION['user'])) {
 <div class="flex justify-center mt-8">
     <div class="w-full max-w-6xl bg-white rounded-2xl shadow-xl p-6 border-2 border-blue-400">
         <!-- Thông tin tìm kiếm -->
-        <?php if ($diemKH || $diemKT || $lichTrinh || $ngayDi): ?>
+        <?php if ($tenNX || $diemKH || $diemKT || $lichTrinh || $ngayDi): ?>
         <div class="mb-6 flex justify-center">
             <div class="bg-blue-100 border border-blue-300 rounded-xl px-6 py-3 text-blue-800 text-lg font-semibold flex items-center gap-2 shadow">
                 Đã tìm thấy <span class="font-bold text-blue-700 text-xl"><?= $total ?></span> chuyến xe phù hợp
